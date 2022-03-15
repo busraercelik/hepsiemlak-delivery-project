@@ -11,43 +11,43 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Data
-@Configuration
+//@Configuration
 public class RabbitMqConfig {
 
-	@Value("${rabbitmq.queue}")
-	private String queueName;
-
-	@Value("${rabbitmq.exchange}")
-	private String exchange;
-
-	@Value("${rabbitmq.routingkey}")
-	private String routingkey;
-
-	@Bean
-	public Queue queue() {
-		return new Queue(queueName, false);
-	}
-
-	@Bean
-	public DirectExchange exchange() {
-		return new DirectExchange(exchange);
-	}
-
-	@Bean
-	public Binding binding(Queue queue, DirectExchange exchange) {
-		return BindingBuilder.bind(queue).to(exchange).with(routingkey);
-	}
-
-	@Bean
-	public MessageConverter jsonMessageConverter() {
-		return new Jackson2JsonMessageConverter();
-	}
-
-	@Bean
-	public AmqpTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
-		RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-		rabbitTemplate.setMessageConverter(jsonMessageConverter());
-		return rabbitTemplate;
-	}
+//	@Value("${rabbitmq.queue}")
+//	private String queueName;
+//
+//	@Value("${rabbitmq.exchange}")
+//	private String exchange;
+//
+//	@Value("${rabbitmq.routingkey}")
+//	private String routingkey;
+//
+//	@Bean
+//	public Queue queue() {
+//		return new Queue(queueName, false);
+//	}
+//
+//	@Bean
+//	public DirectExchange exchange() {
+//		return new DirectExchange(exchange);
+//	}
+//
+//	@Bean
+//	public Binding binding(Queue queue, DirectExchange exchange) {
+//		return BindingBuilder.bind(queue).to(exchange).with(routingkey);
+//	}
+//
+//	@Bean
+//	public MessageConverter jsonMessageConverter() {
+//		return new Jackson2JsonMessageConverter();
+//	}
+//
+//	@Bean
+//	public AmqpTemplate rabbitTemplate(ConnectionFactory connectionFactory) {
+//		RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
+//		rabbitTemplate.setMessageConverter(jsonMessageConverter());
+//		return rabbitTemplate;
+//	}
 
 }

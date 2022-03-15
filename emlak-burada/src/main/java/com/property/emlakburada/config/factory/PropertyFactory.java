@@ -1,11 +1,12 @@
 package com.property.emlakburada.config.factory;
 
 
-import com.property.emlakburada.dto.PropertyType;
-import com.property.emlakburada.model.Commercial;
-import com.property.emlakburada.model.Land;
-import com.property.emlakburada.model.Property;
-import com.property.emlakburada.model.Residential;
+import com.bsr.emlak.commons.entity.Commercial;
+import com.bsr.emlak.commons.entity.Land;
+import com.bsr.emlak.commons.entity.Property;
+import com.bsr.emlak.commons.entity.Residential;
+import com.bsr.emlak.commons.enums.PropertyType;
+
 
 public class PropertyFactory {
 

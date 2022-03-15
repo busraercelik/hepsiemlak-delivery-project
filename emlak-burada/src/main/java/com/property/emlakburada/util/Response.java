@@ -1,13 +1,13 @@
 package com.property.emlakburada.util;
 
+import com.bsr.emlak.commons.dto.request.PersonRequestDTO;
+import com.bsr.emlak.commons.dto.response.AdvertResponseDTO;
+import com.bsr.emlak.commons.dto.response.PersonResponseDTO;
+import com.bsr.emlak.commons.entity.Advert;
+import com.bsr.emlak.commons.entity.Person;
+import com.bsr.emlak.commons.enums.PropertyType;
 import com.property.emlakburada.client.request.AdvertRequest;
 import com.property.emlakburada.config.factory.PropertyFactory;
-import com.property.emlakburada.dto.PersonRequestDTO;
-import com.property.emlakburada.dto.PropertyType;
-import com.property.emlakburada.dto.response.AdvertResponseDTO;
-import com.property.emlakburada.dto.response.PersonResponseDTO;
-import com.property.emlakburada.model.Advert;
-import com.property.emlakburada.model.Person;
 
 public class Response {
 

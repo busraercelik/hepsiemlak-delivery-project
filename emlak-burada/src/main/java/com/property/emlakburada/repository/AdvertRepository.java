@@ -1,6 +1,7 @@
 package com.property.emlakburada.repository;
 
-import com.property.emlakburada.model.Advert;
+
+import com.bsr.emlak.commons.entity.Advert;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,13 +1,11 @@
 package com.property.emlakburada.service;
 
+import com.bsr.emlak.commons.dto.response.AdvertResponseDTO;
+import com.bsr.emlak.commons.entity.Advert;
+import com.bsr.emlak.commons.entity.Person;
 import com.property.emlakburada.client.request.AddressRequest;
 import com.property.emlakburada.client.request.AdvertRequest;
 import com.property.emlakburada.client.request.BannerRequest;
-import com.property.emlakburada.dto.response.AdvertResponseDTO;
-import com.property.emlakburada.model.Advert;
-import com.property.emlakburada.model.Person;
-import com.property.emlakburada.queue.EmailMessage;
-import com.property.emlakburada.queue.QueueService;
 import com.property.emlakburada.repository.AdvertRepository;
 import com.property.emlakburada.repository.PersonRepository;
 import com.property.emlakburada.util.Response;

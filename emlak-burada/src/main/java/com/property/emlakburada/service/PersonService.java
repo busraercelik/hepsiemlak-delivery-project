@@ -1,8 +1,8 @@
 package com.property.emlakburada.service;
 
-import com.property.emlakburada.dto.PersonRequestDTO;
-import com.property.emlakburada.dto.response.PersonResponseDTO;
-import com.property.emlakburada.model.Person;
+import com.bsr.emlak.commons.dto.request.PersonRequestDTO;
+import com.bsr.emlak.commons.dto.response.PersonResponseDTO;
+import com.bsr.emlak.commons.entity.Person;
 import com.property.emlakburada.repository.PersonRepository;
 import com.property.emlakburada.util.Response;
 import lombok.extern.slf4j.Slf4j;

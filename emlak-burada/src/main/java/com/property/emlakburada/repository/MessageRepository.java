@@ -1,6 +1,6 @@
 package com.property.emlakburada.repository;
 
-import com.property.emlakburada.model.Message;
+import com.bsr.emlak.commons.entity.Message;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

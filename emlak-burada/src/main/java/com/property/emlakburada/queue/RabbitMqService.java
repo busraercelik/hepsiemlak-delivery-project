@@ -7,16 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RabbitMqService implements QueueService {
+public class RabbitMqService {
 
-	@Autowired
-	private AmqpTemplate rabbitTemplate;
-
-	@Autowired
-	private RabbitMqConfig config;
-
-	@Override
-	public void sendMessage(EmailMessageService message) {
-		rabbitTemplate.convertAndSend(config.getExchange(), config.getRoutingkey(), message);
-	}
+//	@Autowired
+//	private AmqpTemplate rabbitTemplate;
+//
+//	@Autowired
+//	private RabbitMqConfig config;
+//
+//	@Override
+//	public void sendMessage(EmailMessageService message) {
+//		rabbitTemplate.convertAndSend(config.getExchange(), config.getRoutingkey(), message);
+//	}
 }

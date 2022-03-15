@@ -1,8 +1,7 @@
 package com.property.emlakburada.service;
 
-import com.property.emlakburada.dto.MessageRequestDTO;
-import com.property.emlakburada.dto.response.MessageResponseDTO;
-import com.property.emlakburada.model.Message;
+import com.bsr.emlak.commons.dto.request.MessageRequestDTO;
+import com.bsr.emlak.commons.dto.response.MessageResponseDTO;
 import com.property.emlakburada.repository.MessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

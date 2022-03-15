@@ -1,9 +1,9 @@
 package com.property.emlakburada.service;
 
 
-import com.property.emlakburada.dto.MessageRequestDTO;
-import com.property.emlakburada.dto.response.MessageResponseDTO;
-import com.property.emlakburada.model.Message;
+import com.bsr.emlak.commons.dto.request.MessageRequestDTO;
+import com.bsr.emlak.commons.dto.response.MessageResponseDTO;
+import com.bsr.emlak.commons.entity.Message;
 import org.modelmapper.ModelMapper;
 
 public class MessageTranformerService {

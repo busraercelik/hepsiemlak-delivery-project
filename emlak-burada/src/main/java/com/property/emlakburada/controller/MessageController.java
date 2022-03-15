@@ -1,7 +1,8 @@
 package com.property.emlakburada.controller;
 
-import com.property.emlakburada.dto.MessageRequestDTO;
-import com.property.emlakburada.dto.response.MessageResponseDTO;
+import com.bsr.emlak.commons.dto.request.MessageRequestDTO;
+import com.bsr.emlak.commons.dto.response.MessageResponseDTO;
+
 import com.property.emlakburada.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

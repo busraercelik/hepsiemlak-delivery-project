@@ -1,7 +1,7 @@
 package com.property.emlakburada.controller;
 
+import com.bsr.emlak.commons.dto.response.AdvertResponseDTO;
 import com.property.emlakburada.client.request.AdvertRequest;
-import com.property.emlakburada.dto.response.AdvertResponseDTO;
 import com.property.emlakburada.service.AdvertService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
