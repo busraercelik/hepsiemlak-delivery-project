@@ -1,6 +1,5 @@
-package com.bsr.emlak.commons.dto.response;
+package com.bsr.emlak.burada.client.request;
 
-import com.bsr.emlak.commons.dto.request.AddressRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,10 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class BannerResponse {
-	private long id;
+public class BannerRequest {
+	
 	private int advertNo;
 	private String phone;
-	private int total;
+	private int duration;
 	private AddressRequest address;
+
 }

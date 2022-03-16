@@ -8,15 +8,18 @@
         <version>2.6.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>com.bsr.emlak</groupId>
     <artifactId>commons</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>emlak-burada-commons</name>
     <description>emlak-burada-commons</description>
+
     <properties>
         <java.version>11</java.version>
         <spring-cloud.version>2021.0.1</spring-cloud.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>

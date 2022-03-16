@@ -8,15 +8,18 @@
         <version>2.6.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.registry</groupId>
+
+    <groupId>com.bsr.emlak</groupId>
     <artifactId>service-registry</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>service-registry</name>
     <description>service-registry</description>
+
     <properties>
         <java.version>11</java.version>
         <spring-cloud.version>2021.0.1</spring-cloud.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.cloud</groupId>

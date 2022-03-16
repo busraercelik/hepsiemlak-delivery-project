@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.property</groupId>
-    <artifactId>emlak-burada</artifactId>
+    <groupId>com.bsr.emlak</groupId>
+    <artifactId>burada</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>01 - emlak-burada</name>
+    <name>emlak-burada</name>
     <description>emlak-burada</description>
 
     <properties>
