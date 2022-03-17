@@ -1,8 +1,8 @@
 package com.bsr.emlak.burada.controller;
 
-import com.bsr.emlak.commons.dto.request.PersonRequestDTO;
-import com.bsr.emlak.commons.dto.response.PersonResponseDTO;
-import com.bsr.emlak.burada.service.PersonService;
+import com.bsr.emlak.commons.dto.request.EmlakUserRequestDTO;
+import com.bsr.emlak.burada.service.EmlakUserService;
+import com.bsr.emlak.commons.entity.EmlakUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,21 +13,21 @@ import java.util.List;
 public class PersonController {
 
     @Autowired
-    private PersonService personService;
+    private EmlakUserService emlakUserService;
 
     @GetMapping(value = "/persons")
-    public ResponseEntity<List<PersonResponseDTO>> getAllPerson() {
-        return new ResponseEntity<>(personService.getAllUsers(), HttpStatus.OK);
+    public ResponseEntity<List<EmlakUser>> getAllPerson() {
+        return new ResponseEntity<>(emlakUserService.getAllUsers(), HttpStatus.OK);
     }
 
     @PostMapping(value = "/person")
-    public ResponseEntity<?> savePerson(@RequestBody PersonRequestDTO personRequestDTO) {
-        personService.savePerson(personRequestDTO);
+    public ResponseEntity<?> savePerson(@RequestBody EmlakUserRequestDTO emlakUserRequestDTO) {
+        emlakUserService.savePerson(emlakUserRequestDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/person/{personId}")
-    public ResponseEntity<PersonResponseDTO> getPersonById(@PathVariable long personId) {
-        return new ResponseEntity<>(personService.getPersonById(personId), HttpStatus.OK);
+    public ResponseEntity<EmlakUser> getPersonById(@PathVariable long personId) {
+        return new ResponseEntity<>(emlakUserService.getPersonById(personId), HttpStatus.OK);
     }
 }

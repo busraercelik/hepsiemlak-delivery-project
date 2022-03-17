@@ -6,5 +6,5 @@ public class Payload {
     private String country;
     private String description;
     private String payment_method;
-    private Person person;
+    private EmlakUser emlakUser;
 }

@@ -1,6 +1,6 @@
 package com.bsr.emlak.commons.dto.response;
 
-import com.bsr.emlak.commons.entity.Person;
+import com.bsr.emlak.commons.entity.EmlakUser;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -10,6 +10,6 @@ public class MessageResponseDTO {
     private long id;
     private String text;
     private LocalDateTime sentAt;
-    private Person sentFrom;
-    private Person sentTo;
+    private EmlakUser sentFrom;
+    private EmlakUser sentTo;
 }

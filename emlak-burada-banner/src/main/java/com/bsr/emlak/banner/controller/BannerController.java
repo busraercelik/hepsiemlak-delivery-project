@@ -3,8 +3,8 @@ package com.bsr.emlak.banner.controller;
 import java.util.List;
 
 import com.bsr.emlak.banner.service.BannerService;
-import com.bsr.emlak.commons.dto.request.BannerRequest;
-import com.bsr.emlak.commons.dto.response.BannerResponse;
+import com.bsr.emlak.commons.dto.request.BannerRequestDTO;
+import com.bsr.emlak.commons.dto.response.BannerResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +18,12 @@ public class BannerController {
 	private BannerService service;
 
 	@GetMapping(value = "/banners")
-	public ResponseEntity<List<BannerResponse>> getAllBanners() {
+	public ResponseEntity<List<BannerResponseDTO>> getAllBanners() {
 		return new ResponseEntity<>(service.getAllBanners(), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/banner", method = RequestMethod.POST)
-	public ResponseEntity<?> saveBanner(@RequestBody BannerRequest request) {
+	public ResponseEntity<?> saveBanner(@RequestBody BannerRequestDTO request) {
 		service.saveBanner(request);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

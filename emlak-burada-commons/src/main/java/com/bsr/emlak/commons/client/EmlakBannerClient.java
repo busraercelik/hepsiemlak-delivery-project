@@ -1,7 +1,7 @@
 package com.bsr.emlak.commons.client;
 
-import com.bsr.emlak.commons.dto.request.BannerRequest;
-import com.bsr.emlak.commons.dto.response.BannerResponse;
+import com.bsr.emlak.commons.dto.request.BannerRequestDTO;
+import com.bsr.emlak.commons.dto.response.BannerResponseDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,5 +10,5 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface EmlakBannerClient {
 
     @PostMapping(value = "/banner")
-    BannerResponse saveBanner(@RequestBody BannerRequest request);
+    BannerResponseDTO saveBanner(@RequestBody BannerRequestDTO request);
 }

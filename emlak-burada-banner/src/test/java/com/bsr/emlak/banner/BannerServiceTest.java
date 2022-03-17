@@ -1,9 +1,8 @@
 package com.bsr.emlak.banner;
 
 import com.bsr.emlak.banner.service.BannerService;
-import com.bsr.emlak.commons.dto.request.AddressRequest;
-import com.bsr.emlak.commons.dto.request.BannerRequest;
-import com.bsr.emlak.commons.dto.response.BannerResponse;
+import com.bsr.emlak.commons.dto.request.BannerRequestDTO;
+import com.bsr.emlak.commons.dto.response.BannerResponseDTO;
 import com.bsr.emlak.commons.entity.Address;
 import com.bsr.emlak.commons.entity.Banner;
 import com.bsr.emlak.commons.repository.BannerRepository;
@@ -33,7 +32,7 @@ public class BannerServiceTest {
     void getAllBanners() {
         Mockito.when(bannerRepository.findAll())
                 .thenReturn(Collections.singletonList(prepareBanner()));
-        List<BannerResponse> banners = bannerService.getAllBanners();
+        List<BannerResponseDTO> banners = bannerService.getAllBanners();
         verify(bannerRepository).findAll();
         assertThat(banners.size()).isNotZero();
     }
@@ -62,17 +61,17 @@ public class BannerServiceTest {
         return banner;
     }
 
-    public BannerRequest convertToBannerRequest(Banner banner) {
-        BannerRequest bannerRequest = new BannerRequest();
-        bannerRequest.setAdvertNo(banner.getAdvertNo());
-        bannerRequest.setAddress(convertToAddressRequest(banner.getAddress()));
-        bannerRequest.setPhone(banner.getPhone());
-        bannerRequest.setTotal(banner.getTotal());
-        return bannerRequest;
+    public BannerRequestDTO convertToBannerRequest(Banner banner) {
+        BannerRequestDTO bannerRequestDTO = new BannerRequestDTO();
+        bannerRequestDTO.setAdvertNo(banner.getAdvertNo());
+        bannerRequestDTO.setAddress(convertToAddressRequest(banner.getAddress()));
+        bannerRequestDTO.setPhone(banner.getPhone());
+        bannerRequestDTO.setTotal(banner.getTotal());
+        return bannerRequestDTO;
     }
 
-    public BannerRequest prepareBannerRequest() {
-        BannerRequest banner = new BannerRequest();
+    public BannerRequestDTO prepareBannerRequest() {
+        BannerRequestDTO banner = new BannerRequestDTO();
         banner.setPhone("05555555555");
         banner.setTotal(5);
         banner.setAddress(convertToAddressRequest(prepareAddress()));

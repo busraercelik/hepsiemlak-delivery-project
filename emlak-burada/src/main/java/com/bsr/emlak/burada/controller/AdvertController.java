@@ -1,8 +1,8 @@
 package com.bsr.emlak.burada.controller;
 
 import com.bsr.emlak.burada.client.request.AdvertRequest;
-import com.bsr.emlak.commons.dto.response.AdvertResponseDTO;
 import com.bsr.emlak.burada.service.AdvertService;
+import com.bsr.emlak.commons.entity.Advert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,22 +18,22 @@ public class AdvertController {
 
 
 	@GetMapping(value = "/adverts")
-	public ResponseEntity<List<AdvertResponseDTO>> getAllAdvert() {
+	public ResponseEntity<List<Advert>> getAllAdvert() {
 		return new ResponseEntity<>(advertService.getAllAdverts(), HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/advert")
-	public ResponseEntity<AdvertResponseDTO> createAdvert(@RequestBody AdvertRequest request) {
+	public ResponseEntity<Advert> createAdvert(@RequestBody AdvertRequest request) {
 		return new ResponseEntity<>(advertService.saveAdvert(request), HttpStatus.CREATED);
 	}
 
 	@GetMapping(value = "/advert/{advertNo}")
-	public ResponseEntity<AdvertResponseDTO> getAdvertByAdvertId(@PathVariable(required = false) long advertNo) {
+	public ResponseEntity<Advert> getAdvertByAdvertId(@PathVariable(required = false) long advertNo) {
 		return new ResponseEntity<>(advertService.getAdvertByAdvertId(advertNo), HttpStatus.OK);
 	}
 
 	@GetMapping(value = "/adverts/{personId}")
-	public ResponseEntity<List<AdvertResponseDTO>> getFavouriteAdverts(@PathVariable long personId) {
+	public ResponseEntity<List<Advert>> getFavouriteAdverts(@PathVariable long personId) {
 		return new ResponseEntity<>(advertService.getAllFavouriteAdverts(personId) , HttpStatus.OK);
 	}
 

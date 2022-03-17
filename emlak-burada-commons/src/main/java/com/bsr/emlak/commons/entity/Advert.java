@@ -1,52 +1,64 @@
 package com.bsr.emlak.commons.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.bsr.emlak.commons.entity.property.Property;
+import com.bsr.emlak.commons.enums.AdvertStatus;
+import lombok.*;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
 @Table(name = "advert")
-public class Advert {
-    @Id
-    @Column(insertable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+public class Advert extends BaseEntity{
 
-    private int adNo;
+    private String advertUUID;
+
+    private String title;
 
     private String description;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Property property;
 
-    private String title;
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "favouriteAdverts")
+    private Set<EmlakUser> favouriteOf;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Person user;
+    @JoinColumn(name = "posted_by_id", referencedColumnName = "id")
+    private EmlakUser postedBy;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Person postedBy;
-
-    @Transient
-    private String[] imageList = new String[5];
+    @ElementCollection
+    private List<String> imageList;
     private BigDecimal cost;
-    private int duration;
-    private boolean shouldHighlighted = false;
-    private boolean isReviewed = false;
-    private LocalDate postedDate;
-    private boolean isActive;
+    private Integer duration;
+    private Boolean shouldHighlighted = false;
+    private Boolean isReviewed = false;
+    private Boolean isActive;
+    private String phoneNumber;
+    @Enumerated(EnumType.STRING)
+    private AdvertStatus advertStatus;
 
-
-    public Advert(Property realEstate, Person user, String[] imageList) {
+    public Advert(Property realEstate, EmlakUser emlakUser) {
         this.property = realEstate;
-        this.user = user;
-        this.imageList = imageList;
+        this.postedBy = emlakUser;
+    }
+
+    @PrePersist
+    @PreUpdate
+    public void updateInternalFields() {
+        this.createdAt = ObjectUtils.isEmpty(this.createdAt) ? LocalDateTime.now() : this.createdAt;
+        this.advertUUID = StringUtils.isEmpty(this.advertUUID) ? UUID.randomUUID().toString() : this.advertUUID;
+        this.modifiedAt = LocalDateTime.now();
     }
 }

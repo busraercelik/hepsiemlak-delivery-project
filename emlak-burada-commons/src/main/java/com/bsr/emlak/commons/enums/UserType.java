@@ -1,6 +1,6 @@
 package com.bsr.emlak.commons.enums;
 
-public enum PersonType {
+public enum UserType {
     CORPORATE,
     INDIVIDUAL
 }
