@@ -33,7 +33,7 @@ public class EmlakUser extends BaseEntity {
     private Set<SavedSearch> savedSearches;
 
     @ManyToMany(targetEntity = Advert.class, cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
-    @JoinTable(name = "person_favourite_advert",
+    @JoinTable(name = "emlak_user_favourite_advert",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "advert_id", referencedColumnName = "id")})
     private Set<Advert> favouriteAdverts;
