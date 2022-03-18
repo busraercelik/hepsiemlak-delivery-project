@@ -16,6 +16,7 @@ public class AdvertRequestDTO {
 	private String title;
 	private String description;
 	private Long propertyId;
+	private Long userId;
 	private List<String> imageList;
 	private BigDecimal cost;
 	private Integer duration;

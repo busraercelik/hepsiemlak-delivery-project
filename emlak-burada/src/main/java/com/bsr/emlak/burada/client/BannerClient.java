@@ -1,8 +1,7 @@
 package com.bsr.emlak.burada.client;
 
-import com.bsr.emlak.burada.client.request.AddressRequest;
-import com.bsr.emlak.burada.client.request.BannerRequest;
-import com.bsr.emlak.burada.client.response.BannerResponse;
+import com.bsr.emlak.commons.dto.request.BannerRequestDTO;
+import com.bsr.emlak.commons.dto.response.BannerResponseDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +20,8 @@ public class BannerClient {
 		RestTemplate restTemplate = new RestTemplate();
 
 		String bannerServiceUrl = "http://localhost:8081/banners";
-		ResponseEntity<BannerResponse> response = restTemplate
-				.postForEntity(bannerServiceUrl, prepareSaveBannerRequest(), BannerResponse.class);
+		ResponseEntity<BannerResponseDTO> response = restTemplate
+				.postForEntity(bannerServiceUrl, prepareSaveBannerRequest(), BannerResponseDTO.class);
 		log.info("In saveBanner() response is  "+ response);
 
 		if (response.getStatusCode() == HttpStatus.OK) {
@@ -32,12 +31,9 @@ public class BannerClient {
 		}
 	}
 
-	private BannerRequest prepareSaveBannerRequest() {
-		BannerRequest request = new BannerRequest();
-		request.setAdvertNo(adNo++);
-		request.setPhone("12345");
-		request.setDuration(1);
-		request.setAddress(new AddressRequest("istanbul", "Kadikoy", "home address"));
+	private BannerRequestDTO prepareSaveBannerRequest() {
+		BannerRequestDTO request = new BannerRequestDTO();
+		request.setAdvertUUID("123y6");
 
 		return request;
 	}

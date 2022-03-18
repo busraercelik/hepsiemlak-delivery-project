@@ -1,6 +1,6 @@
 package com.bsr.emlak.burada.service;
 
-import com.bsr.emlak.burada.client.request.AdvertRequest;
+import com.bsr.emlak.commons.dto.request.AdvertRequestDTO;
 import com.bsr.emlak.commons.entity.Advert;
 import com.bsr.emlak.commons.entity.EmlakUser;
 import com.bsr.emlak.commons.repository.AdvertRepository;
@@ -31,7 +31,7 @@ public class AdvertService {
 	}
 
 	// after advert is saved send mail to queue
-	public Advert saveAdvert(AdvertRequest request) {
+	public Advert saveAdvert(AdvertRequestDTO request) {
 		EmlakUser emlakUser = emlakUserRepository.getById(request.getUserId());
 
 		Advert advert = new Advert();

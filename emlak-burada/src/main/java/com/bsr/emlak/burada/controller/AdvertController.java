@@ -1,7 +1,7 @@
 package com.bsr.emlak.burada.controller;
 
-import com.bsr.emlak.burada.client.request.AdvertRequest;
 import com.bsr.emlak.burada.service.AdvertService;
+import com.bsr.emlak.commons.dto.request.AdvertRequestDTO;
 import com.bsr.emlak.commons.entity.Advert;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +23,7 @@ public class AdvertController {
 	}
 
 	@PostMapping(value = "/advert")
-	public ResponseEntity<Advert> createAdvert(@RequestBody AdvertRequest request) {
+	public ResponseEntity<Advert> createAdvert(@RequestBody AdvertRequestDTO request) {
 		return new ResponseEntity<>(advertService.saveAdvert(request), HttpStatus.CREATED);
 	}
 
