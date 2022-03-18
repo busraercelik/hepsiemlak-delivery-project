@@ -18,18 +18,21 @@ public class PropertyRequestDTO {
     private LandPropertyDetails landPropertyDetails;
     private ResidentialPropertyDetails residentialPropertyDetails;
 
+    @Getter
     public static class CommercialPropertyDetails {
         private String category;
         private Integer dues;
     }
 
+    @Getter
     public static class LandPropertyDetails {
         private Integer parcelNo;
         private String zoning;
     }
 
+    @Getter
     public static class ResidentialPropertyDetails {
-        private String noOfRoom;
+        private Integer noOfRoom;
         private Integer noOfBath;
         private Integer floor;
         private Integer buildingAge;

@@ -12,10 +12,10 @@ import java.math.BigDecimal;
 public class AdvertRequest {
 	private String title;
 	private BigDecimal cost;
-	private int duration;
-	private boolean shouldHighlighted;
-	private boolean isReviewed;
-	private boolean isActive;
-	private long propertyId;
-	private long userId;
+	private Integer duration;
+	private Boolean shouldHighlighted;
+	private Boolean isReviewed;
+	private Boolean isActive;
+	private Long propertyId;
+	private Long userId;
 }
