@@ -1,11 +1,13 @@
 package com.bsr.emlak.commons.dto.request;
 
 import com.bsr.emlak.commons.enums.PropertyType;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
 
 @Getter
 @ToString
+@Builder
 public class PropertyRequestDTO {
     private String description;
     private Long addressId;

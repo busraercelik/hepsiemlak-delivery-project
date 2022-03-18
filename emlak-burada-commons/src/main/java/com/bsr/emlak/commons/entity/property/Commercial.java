@@ -1,5 +1,6 @@
 package com.bsr.emlak.commons.entity.property;
 
+import com.bsr.emlak.commons.enums.PropertyType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,4 +20,9 @@ import java.util.List;
 public class Commercial extends Property {
     private String category;
     private Integer dues;
+
+    @Override
+    public PropertyType getPropertyType() {
+        return PropertyType.COMMERCIAL;
+    }
 }

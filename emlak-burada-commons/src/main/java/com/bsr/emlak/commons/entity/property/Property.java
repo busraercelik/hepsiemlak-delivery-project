@@ -2,6 +2,7 @@ package com.bsr.emlak.commons.entity.property;
 
 import com.bsr.emlak.commons.entity.Address;
 import com.bsr.emlak.commons.entity.BaseEntity;
+import com.bsr.emlak.commons.enums.PropertyType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,10 +19,10 @@ import javax.persistence.*;
 public abstract class Property extends BaseEntity {
 
     private String description;
-
     private Float grossSquareMeter;
-
     private Boolean isForSale;
+
+    public abstract PropertyType getPropertyType();
 
     @OneToOne
     @JoinColumn(name = "address_id", referencedColumnName = "id")

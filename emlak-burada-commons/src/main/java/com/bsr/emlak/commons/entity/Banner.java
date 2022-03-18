@@ -1,16 +1,16 @@
 package com.bsr.emlak.commons.entity;
 
-import com.bsr.emlak.commons.entity.property.Property;
 import com.bsr.emlak.commons.enums.PropertyType;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
-import java.util.zip.InflaterInputStream;
 
 @Getter
 @Setter
@@ -19,17 +19,21 @@ import java.util.zip.InflaterInputStream;
 @Entity
 @Table(name = "banner")
 public class Banner extends BaseEntity{
-	private String title;
+
 	private String advertUUID;
+	private String title;
 	private String phoneNumber;
+
 	private String city;
 	private String district;
+
 	@ElementCollection
 	private List<String> imageList;
-	private LocalDateTime postedDate;
 	private Float grossSquareMeter;
+
 	@Enumerated(EnumType.STRING)
 	private PropertyType propertyType;
+	private BigDecimal cost;
 
 	@PrePersist
 	@PreUpdate

@@ -3,6 +3,7 @@ package com.bsr.emlak.burada.service;
 import com.bsr.emlak.commons.dto.request.MessageRequestDTO;
 import com.bsr.emlak.commons.dto.response.MessageResponseDTO;
 import com.bsr.emlak.commons.repository.MessageRepository;
+import com.bsr.emlak.commons.transformers.MessageTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -21,16 +22,16 @@ public class MessageService {
     public List<MessageResponseDTO> getAllMessages() {
        return messageRepository.findAll()
                .stream()
-               .map(MessageTranformerService::convertToMessageResponseDTO)
+               .map(MessageTransformer.Response::transform)
                .collect(Collectors.toList());
     }
 
     public MessageResponseDTO getMessageById(long id) {
-        return messageRepository.findById(id).map(MessageTranformerService::convertToMessageResponseDTO).orElse(null);
+        return messageRepository.findById(id).map(MessageTransformer.Response::transform).orElse(null);
     }
 
     public void saveMessage(MessageRequestDTO messageRequestDTO) {
-        messageRepository.save(MessageTranformerService.convertToMessage(messageRequestDTO));
+        messageRepository.save(MessageTransformer.transform(messageRequestDTO));
     }
 
 }

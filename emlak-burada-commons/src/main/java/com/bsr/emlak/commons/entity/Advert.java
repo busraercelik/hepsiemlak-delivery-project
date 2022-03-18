@@ -8,7 +8,6 @@ import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
@@ -23,9 +22,7 @@ import java.util.UUID;
 public class Advert extends BaseEntity{
 
     private String advertUUID;
-
     private String title;
-
     private String description;
 
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
@@ -42,9 +39,11 @@ public class Advert extends BaseEntity{
     private List<String> imageList;
     private BigDecimal cost;
     private Integer duration;
+
     private Boolean shouldHighlighted = false;
     private Boolean isReviewed = false;
     private Boolean isActive;
+
     private String phoneNumber;
     @Enumerated(EnumType.STRING)
     private AdvertStatus advertStatus;
