@@ -2,6 +2,7 @@ package com.bsr.emlak.commons.transformers;
 
 import com.bsr.emlak.commons.dto.request.AdvertRequestDTO;
 import com.bsr.emlak.commons.entity.Advert;
+import com.bsr.emlak.commons.entity.Document;
 import com.bsr.emlak.commons.entity.EmlakUser;
 import com.bsr.emlak.commons.entity.property.Property;
 import com.bsr.emlak.commons.repository.EmlakUserRepository;
@@ -9,7 +10,10 @@ import com.bsr.emlak.commons.repository.PropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Component
 public class AdvertTransformer {
@@ -35,7 +39,19 @@ public class AdvertTransformer {
         advert.setDescription(request.getDescription());
         advert.setProperty(property.orElse(null));
         advert.setPostedBy(emlakUser.orElse(null));
-        advert.setImages(request.getImages());
+
+        List<Document> images = request.getImages().stream()
+                .map(url -> {
+                    Document imageDoc = new Document();
+                    imageDoc.setUrl(url);
+                    imageDoc.setDocumentType(Document.DocumentType.IMAGE);
+                    emlakUser.ifPresent(nonEmptyEmlakUser -> {
+                        imageDoc.setCreatedBy(nonEmptyEmlakUser.getCreatedBy());
+                    });
+                    return imageDoc;
+                }).collect(Collectors.toList());
+
+        advert.setImages(images);
         advert.setCost(request.getCost());
         advert.setDuration(request.getDuration());
         advert.setShouldHighlighted(request.getShouldHighlighted());

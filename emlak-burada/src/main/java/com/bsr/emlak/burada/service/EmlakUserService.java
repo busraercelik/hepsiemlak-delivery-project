@@ -37,8 +37,8 @@ public class EmlakUserService {
         return emlakUser;
     }
 
-    public void saveEmlakUser(EmlakUserRequestDTO emlakUserRequestDTO) {
-        emlakUserRepository.save(emlakUserTransformer.transform(emlakUserRequestDTO));
+    public EmlakUser saveEmlakUser(EmlakUserRequestDTO emlakUserRequestDTO) {
+        return emlakUserRepository.save(emlakUserTransformer.transform(emlakUserRequestDTO));
     }
 
 }

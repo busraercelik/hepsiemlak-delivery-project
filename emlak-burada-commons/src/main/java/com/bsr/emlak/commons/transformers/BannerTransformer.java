@@ -21,10 +21,13 @@ public class BannerTransformer {
         this.advertRepository = advertRepository;
     }
 
-    public BannerResponseDTO convertToBannerResponse(Banner banner) {
-        BannerResponseDTO response = new BannerResponseDTO();
-        BeanUtils.copyProperties(banner, response);
-        return response;
+    public static class Response {
+        public static BannerResponseDTO transform(Banner banner) {
+            BannerResponseDTO response = new BannerResponseDTO();
+            BeanUtils.copyProperties(banner, response);
+            response.setPostedDate(banner.getCreatedAt());
+            return response;
+        }
     }
 
     public Banner transform(BannerRequestDTO request){

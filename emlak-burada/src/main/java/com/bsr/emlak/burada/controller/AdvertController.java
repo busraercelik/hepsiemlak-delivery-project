@@ -3,7 +3,6 @@ package com.bsr.emlak.burada.controller;
 import com.bsr.emlak.burada.service.AdvertService;
 import com.bsr.emlak.commons.dto.request.AdvertRequestDTO;
 import com.bsr.emlak.commons.entity.Advert;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +12,11 @@ import java.util.List;
 @RestController
 public class AdvertController {
 
-	@Autowired
-	private AdvertService advertService;
+	private final AdvertService advertService;
 
+	public AdvertController(AdvertService advertService) {
+		this.advertService = advertService;
+	}
 
 	@GetMapping(value = "/adverts")
 	public ResponseEntity<List<Advert>> getAllAdvert() {
@@ -32,9 +33,9 @@ public class AdvertController {
 		return new ResponseEntity<>(advertService.getAdvertByAdvertId(advertNo), HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/adverts/{personId}")
-	public ResponseEntity<List<Advert>> getFavouriteAdverts(@PathVariable long personId) {
-		return new ResponseEntity<>(advertService.getAllFavouriteAdverts(personId) , HttpStatus.OK);
+	@GetMapping(value = "/adverts/{userId}")
+	public ResponseEntity<List<Advert>> getFavouriteAdverts(@PathVariable long userId) {
+		return new ResponseEntity<>(advertService.getAllFavouriteAdverts(userId) , HttpStatus.OK);
 	}
 
 }

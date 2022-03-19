@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 
 import com.bsr.emlak.commons.dto.request.BannerRequestDTO;
 import com.bsr.emlak.commons.dto.response.BannerResponseDTO;
-import com.bsr.emlak.commons.repository.AdvertRepository;
 import com.bsr.emlak.commons.repository.BannerRepository;
 import com.bsr.emlak.commons.transformers.BannerTransformer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +24,7 @@ public class BannerService {
 
 	public List<BannerResponseDTO> getAllBanners() {
 		return repository.findAll().stream()
-				.map(bannerTransformer::convertToBannerResponse)
+				.map(BannerTransformer.Response::transform)
 				.collect(Collectors.toList());
 	}
 

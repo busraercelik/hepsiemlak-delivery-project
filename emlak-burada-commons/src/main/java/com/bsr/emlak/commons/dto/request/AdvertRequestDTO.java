@@ -1,6 +1,5 @@
 package com.bsr.emlak.commons.dto.request;
 
-import com.bsr.emlak.commons.entity.Document;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +17,7 @@ public class AdvertRequestDTO {
 	private String description;
 	private Long propertyId;
 	private Long userId;
-	private List<Document> images;
+	private List<String> images;
 	private BigDecimal cost;
 	private Integer duration;
 	private Boolean shouldHighlighted;
