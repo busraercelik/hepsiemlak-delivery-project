@@ -24,7 +24,7 @@ public abstract class Property extends BaseEntity {
 
     public abstract PropertyType getPropertyType();
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "address_id", referencedColumnName = "id")
     private Address address;
 }

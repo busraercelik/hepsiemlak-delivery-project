@@ -2,13 +2,16 @@ package com.bsr.emlak.commons.entity;
 
 import com.bsr.emlak.commons.entity.property.Property;
 import com.bsr.emlak.commons.enums.AdvertStatus;
-import lombok.*;
-import org.apache.commons.lang3.ObjectUtils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.apache.commons.lang3.StringUtils;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -28,11 +31,12 @@ public class Advert extends BaseEntity{
     @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Property property;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "favouriteAdverts")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "favouriteAdverts", cascade = CascadeType.MERGE)
     private Set<EmlakUser> favouriteOf;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinColumn(name = "posted_by_id", referencedColumnName = "id")
+    @JsonIgnore
     private EmlakUser postedBy;
 
     @ElementCollection
@@ -42,22 +46,14 @@ public class Advert extends BaseEntity{
 
     private Boolean shouldHighlighted = false;
     private Boolean isReviewed = false;
-    private Boolean isActive;
+    private Boolean isActive = true;
 
     private String phoneNumber;
     @Enumerated(EnumType.STRING)
-    private AdvertStatus advertStatus;
-
-    public Advert(Property realEstate, EmlakUser emlakUser) {
-        this.property = realEstate;
-        this.postedBy = emlakUser;
-    }
+    private AdvertStatus advertStatus = AdvertStatus.IN_REVIEW;
 
     @PrePersist
-    @PreUpdate
     public void updateInternalFields() {
-        this.createdAt = ObjectUtils.isEmpty(this.createdAt) ? LocalDateTime.now() : this.createdAt;
         this.advertUUID = StringUtils.isEmpty(this.advertUUID) ? UUID.randomUUID().toString() : this.advertUUID;
-        this.modifiedAt = LocalDateTime.now();
     }
 }

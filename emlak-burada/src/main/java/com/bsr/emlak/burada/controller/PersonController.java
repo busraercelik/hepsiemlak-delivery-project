@@ -17,17 +17,17 @@ public class PersonController {
 
     @GetMapping(value = "/persons")
     public ResponseEntity<List<EmlakUser>> getAllPerson() {
-        return new ResponseEntity<>(emlakUserService.getAllUsers(), HttpStatus.OK);
+        return new ResponseEntity<>(emlakUserService.getAllEmlakUsers(), HttpStatus.OK);
     }
 
     @PostMapping(value = "/person")
     public ResponseEntity<?> savePerson(@RequestBody EmlakUserRequestDTO emlakUserRequestDTO) {
-        emlakUserService.savePerson(emlakUserRequestDTO);
+        emlakUserService.saveEmlakUser(emlakUserRequestDTO);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/person/{personId}")
     public ResponseEntity<EmlakUser> getPersonById(@PathVariable long personId) {
-        return new ResponseEntity<>(emlakUserService.getPersonById(personId), HttpStatus.OK);
+        return new ResponseEntity<>(emlakUserService.getEmlakUserById(personId), HttpStatus.OK);
     }
 }

@@ -34,11 +34,4 @@ public class Banner extends BaseEntity{
 	@Enumerated(EnumType.STRING)
 	private PropertyType propertyType;
 	private BigDecimal cost;
-
-	@PrePersist
-	@PreUpdate
-	public void updateInternalFields() {
-		this.createdAt = ObjectUtils.isEmpty(this.createdAt) ? LocalDateTime.now() : this.createdAt;
-		this.modifiedAt = LocalDateTime.now();
-	}
 }

@@ -5,6 +5,7 @@ import com.bsr.emlak.commons.entity.Advert;
 import com.bsr.emlak.commons.entity.EmlakUser;
 import com.bsr.emlak.commons.repository.AdvertRepository;
 import com.bsr.emlak.commons.repository.EmlakUserRepository;
+import com.bsr.emlak.commons.transformers.AdvertTransformer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,11 +20,13 @@ public class AdvertService {
 
 	private final AdvertRepository advertRepository;
 	private final EmlakUserRepository emlakUserRepository;
+	private final AdvertTransformer advertTransformer;
 
 	@Autowired
-	public AdvertService(AdvertRepository advertRepository, EmlakUserRepository emlakUserRepository) {
+	public AdvertService(AdvertRepository advertRepository, EmlakUserRepository emlakUserRepository, AdvertTransformer advertTransformer) {
 		this.advertRepository = advertRepository;
 		this.emlakUserRepository = emlakUserRepository;
+		this.advertTransformer = advertTransformer;
 	}
 
 	public List<Advert> getAllAdverts() {
@@ -32,13 +35,7 @@ public class AdvertService {
 
 	// after advert is saved send mail to queue
 	public Advert saveAdvert(AdvertRequestDTO request) {
-		EmlakUser emlakUser = emlakUserRepository.getById(request.getUserId());
-
-		Advert advert = new Advert();
-		advert.setPostedBy(emlakUser);
-		advert.setTitle(request.getTitle());
-		advert.setCost(request.getCost());
-		Advert savedAdvert = advertRepository.save(advert);
+		Advert savedAdvert = advertRepository.save(advertTransformer.transform(request));
 
 		//EmailMessage emailMessage = new EmailMessage("cemdrman@gmail.com");
 		//queueService.sendMessage(emailMessage);

@@ -21,11 +21,4 @@ public class Message extends BaseEntity{
     private EmlakUser sentFrom;
     @OneToOne(fetch = FetchType.EAGER)
     private EmlakUser sentTo;
-
-    @PrePersist
-    @PreUpdate
-    public void updateInternalFields() {
-        this.createdAt = ObjectUtils.isEmpty(this.createdAt) ? LocalDateTime.now() : this.createdAt;
-        this.modifiedAt = LocalDateTime.now();
-    }
 }

@@ -26,18 +26,18 @@ public class EmlakUserService {
         this.emlakUserTransformer = emlakUserTransformer;
     }
 
-    public List<EmlakUser> getAllUsers() {
+    public List<EmlakUser> getAllEmlakUsers() {
         return emlakUserRepository.findAll();
     }
 
-    public EmlakUser getPersonById(long id) {
+    public EmlakUser getEmlakUserById(long id) {
         EmlakUser emlakUser = emlakUserRepository.
                 findById(id)
                 .orElseThrow(() -> new RuntimeException(String.format("no person with given id %s found", id)));
         return emlakUser;
     }
 
-    public void savePerson(EmlakUserRequestDTO emlakUserRequestDTO) {
+    public void saveEmlakUser(EmlakUserRequestDTO emlakUserRequestDTO) {
         emlakUserRepository.save(emlakUserTransformer.transform(emlakUserRequestDTO));
     }
 

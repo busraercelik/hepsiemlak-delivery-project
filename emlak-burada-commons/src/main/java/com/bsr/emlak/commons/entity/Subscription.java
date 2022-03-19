@@ -25,11 +25,4 @@ public class Subscription extends BaseEntity{
     private EmlakUser emlakUser;
 
     private BigDecimal purchaseCost;
-
-    @PrePersist
-    @PreUpdate
-    public void updateInternalFields() {
-        this.createdAt = ObjectUtils.isEmpty(this.createdAt) ? LocalDateTime.now() : this.createdAt;
-        this.modifiedAt = LocalDateTime.now();
-    }
 }

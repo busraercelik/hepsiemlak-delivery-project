@@ -13,6 +13,7 @@ public class EmlakUserTransformer {
         emlakUser.setLastName(emlakUserRequestDTO.getLastName());
         emlakUser.setEmail(emlakUserRequestDTO.getEmail());
         emlakUser.setUserType(emlakUserRequestDTO.getUserType());
+        emlakUser.setMobileNo(emlakUserRequestDTO.getMobileNo());
 
         return emlakUser;
     }

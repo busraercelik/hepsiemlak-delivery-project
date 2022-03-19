@@ -1,15 +1,20 @@
 package com.bsr.emlak.commons.entity.property;
 
 import com.bsr.emlak.commons.enums.PropertyType;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.util.Arrays;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Entity
+@Table(name = "land")
 public class Land extends Property {
     private Integer parcelNo;
     private String zoning;
