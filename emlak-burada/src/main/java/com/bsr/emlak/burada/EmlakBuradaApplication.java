@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 //@EnableEurekaClient
-@EnableFeignClients
+@EnableFeignClients(basePackages = "com.bsr.emlak.commons.*")
 @EnableJpaRepositories(basePackages = "com.bsr.emlak.commons.repository")
 @ComponentScan(basePackages = "com.bsr.emlak.*")
 @EntityScan("com.bsr.emlak.*")

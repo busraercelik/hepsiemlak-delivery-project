@@ -5,6 +5,7 @@ import java.util.List;
 import com.bsr.emlak.banner.service.BannerService;
 import com.bsr.emlak.commons.dto.request.BannerRequestDTO;
 import com.bsr.emlak.commons.dto.response.BannerResponseDTO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
+@Slf4j
 public class BannerController {
 
 	@Autowired
@@ -24,8 +26,8 @@ public class BannerController {
 
 	@RequestMapping(value = "/banner", method = RequestMethod.POST)
 	public ResponseEntity<?> saveBanner(@RequestBody BannerRequestDTO request) {
-		service.saveBanner(request);
-		return new ResponseEntity<>(HttpStatus.OK);
+		log.info("Received banner create request {}", request);
+		return new ResponseEntity<>(service.saveBanner(request),HttpStatus.OK);
 	}
 
 }

@@ -1,11 +1,15 @@
 package com.bsr.emlak.burada.service;
 
+import com.bsr.emlak.commons.client.EmlakBannerClient;
 import com.bsr.emlak.commons.dto.request.AdvertRequestDTO;
+import com.bsr.emlak.commons.dto.request.BannerRequestDTO;
+import com.bsr.emlak.commons.dto.response.BannerResponseDTO;
 import com.bsr.emlak.commons.entity.Advert;
 import com.bsr.emlak.commons.entity.EmlakUser;
 import com.bsr.emlak.commons.repository.AdvertRepository;
 import com.bsr.emlak.commons.repository.EmlakUserRepository;
 import com.bsr.emlak.commons.transformers.AdvertTransformer;
+import com.bsr.emlak.commons.transformers.BannerTransformer;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,12 +26,15 @@ public class AdvertService {
 	private final AdvertRepository advertRepository;
 	private final EmlakUserRepository emlakUserRepository;
 	private final AdvertTransformer advertTransformer;
+	private final EmlakBannerClient emlakBannerClient;
 
 	@Autowired
-	public AdvertService(AdvertRepository advertRepository, EmlakUserRepository emlakUserRepository, AdvertTransformer advertTransformer) {
+	public AdvertService(AdvertRepository advertRepository, EmlakUserRepository emlakUserRepository,
+						 AdvertTransformer advertTransformer, EmlakBannerClient emlakBannerClient) {
 		this.advertRepository = advertRepository;
 		this.emlakUserRepository = emlakUserRepository;
 		this.advertTransformer = advertTransformer;
+		this.emlakBannerClient = emlakBannerClient;
 	}
 
 	public List<Advert> getAllAdverts() {
@@ -38,11 +45,13 @@ public class AdvertService {
 	// after advert is saved send mail to queue
 	public Advert saveAdvert(AdvertRequestDTO request) {
 		Advert savedAdvert = advertRepository.save(advertTransformer.transform(request));
+		/* push message to email topic */
 
-		//EmailMessage emailMessage = new EmailMessage("cemdrman@gmail.com");
-		//queueService.sendMessage(emailMessage);
-		// bannerClient.saveBanner(prepareSaveBannerRequest());
-		//emlakBannerService.saveBanner(prepareSaveBannerRequest());
+		/* create banner using feign client */
+		log.info("going to call banner service with advert uuid: {}", savedAdvert.getAdvertUUID());
+		BannerRequestDTO bannerRequestDTO = BannerTransformer.Request.transform(savedAdvert);
+		BannerResponseDTO bannerResponseDTO = emlakBannerClient.saveBanner(bannerRequestDTO);
+		log.info("created banner with id {}", bannerResponseDTO.getAdvertUUID());
 		return savedAdvert;
 	}
 

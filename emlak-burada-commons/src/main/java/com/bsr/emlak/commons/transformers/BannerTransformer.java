@@ -30,6 +30,14 @@ public class BannerTransformer {
         }
     }
 
+    public static class Request {
+        public static BannerRequestDTO transform(Advert advert) {
+            BannerRequestDTO response = new BannerRequestDTO();
+            response.setAdvertUUID(advert.getAdvertUUID());
+            return response;
+        }
+    }
+
     public Banner transform(BannerRequestDTO request){
         Optional<Advert> optionalAdvert = advertRepository.findByAdvertUUID(request.getAdvertUUID());
         optionalAdvert.orElseThrow(()-> new RuntimeException("No advert found for the given advert uuid.") );
