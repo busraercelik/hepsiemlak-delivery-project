@@ -49,6 +49,8 @@ public class AdvertTransformer {
                     emlakUser.ifPresent(nonEmptyEmlakUser -> {
                         imageDoc.setCreatedBy(nonEmptyEmlakUser.getCreatedBy());
                         imageDoc.setModifiedBy(nonEmptyEmlakUser.getCreatedBy());
+                        imageDoc.setCreatedBy(nonEmptyEmlakUser.getId());
+                        imageDoc.setModifiedBy(nonEmptyEmlakUser.getId());
                     });
                     return imageDoc;
                 }).collect(Collectors.toList());

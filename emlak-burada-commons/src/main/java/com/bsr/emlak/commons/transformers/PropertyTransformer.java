@@ -27,7 +27,11 @@ public class PropertyTransformer {
         Optional<EmlakUser> owner = emlakUserRepository.findById(propertyRequestDTO.getEmlakUserId());
         owner.orElseThrow(()-> new RuntimeException(String.format("User with id %s is not found!",
                 propertyRequestDTO.getEmlakUserId())));
-        owner.ifPresent(nonEmptyEmlakUser-> property.setOwner(nonEmptyEmlakUser));
+        owner.ifPresent(nonEmptyEmlakUser-> {
+            property.setOwner(nonEmptyEmlakUser);
+            property.setCreatedBy(nonEmptyEmlakUser.getId());
+            property.setModifiedBy(nonEmptyEmlakUser.getId());
+        });
         return property;
     }
 }
