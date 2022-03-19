@@ -11,6 +11,7 @@ import lombok.ToString;
 public class PropertyRequestDTO {
     private String description;
     private Long addressId;
+    private Long emlakUserId;
     private Float grossSquareMeter;
     private Boolean isForSale;
     private PropertyType propertyType;

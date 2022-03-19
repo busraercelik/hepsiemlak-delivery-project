@@ -23,39 +23,38 @@ public class PropertyFactory {
     public Property getProperty(PropertyRequestDTO requestDTO) {
         PropertyType propertyType = requestDTO.getPropertyType();
 
-        if (propertyType == PropertyType.LAND) {
-            Land land = new Land();
-            updateCommonPropertyDetails(requestDTO, land);
+        switch (propertyType){
+            case LAND:
+                Land land = new Land();
+                updateCommonPropertyDetails(requestDTO, land);
 
-            land.setZoning(requestDTO.getLandPropertyDetails().getZoning());
-            land.setParcelNo(requestDTO.getLandPropertyDetails().getParcelNo());
-            
-            return land;
+                land.setZoning(requestDTO.getLandPropertyDetails().getZoning());
+                land.setParcelNo(requestDTO.getLandPropertyDetails().getParcelNo());
+
+                return land;
+
+            case COMMERCIAL:
+                Commercial commercial = new Commercial();
+                updateCommonPropertyDetails(requestDTO, commercial);
+
+                commercial.setCategory(requestDTO.getCommercialPropertyDetails().getCategory());
+                commercial.setDues(requestDTO.getCommercialPropertyDetails().getDues());
+
+                return commercial;
+
+            case RESIDENTIAL:
+                Residential residential =  new Residential();
+                updateCommonPropertyDetails(requestDTO, residential);
+
+                residential.setBuildingAge(requestDTO.getResidentialPropertyDetails().getBuildingAge());
+                residential.setFloor(requestDTO.getResidentialPropertyDetails().getFloor());
+                residential.setIsEligibleForCredit(requestDTO.getResidentialPropertyDetails().getIsEligibleForCredit());
+                residential.setNoOfBath(requestDTO.getResidentialPropertyDetails().getNoOfBath());
+                residential.setNoOfRoom(requestDTO.getResidentialPropertyDetails().getNoOfRoom());
+
+                return residential;
         }
-
-        if (propertyType == PropertyType.COMMERCIAL) {
-            Commercial commercial = new Commercial();
-            updateCommonPropertyDetails(requestDTO, commercial);
-            
-            commercial.setCategory(requestDTO.getCommercialPropertyDetails().getCategory());
-            commercial.setDues(requestDTO.getCommercialPropertyDetails().getDues());
-            
-            return commercial;
-        }
-
-        if (propertyType == PropertyType.RESIDENTIAL) {
-            Residential residential =  new Residential();
-            updateCommonPropertyDetails(requestDTO, residential);
-            
-            residential.setBuildingAge(requestDTO.getResidentialPropertyDetails().getBuildingAge());
-            residential.setFloor(requestDTO.getResidentialPropertyDetails().getFloor());
-            residential.setIsEligibleForCredit(requestDTO.getResidentialPropertyDetails().getIsEligibleForCredit());
-            residential.setNoOfBath(requestDTO.getResidentialPropertyDetails().getNoOfBath());
-            residential.setNoOfRoom(requestDTO.getResidentialPropertyDetails().getNoOfRoom());
-
-            return residential;
-        }
-        return null;
+        throw new RuntimeException("Failed to create a property from request!");
     }
 
     private void updateCommonPropertyDetails(PropertyRequestDTO requestDTO, Property property) {

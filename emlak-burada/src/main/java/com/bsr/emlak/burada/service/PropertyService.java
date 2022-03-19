@@ -3,25 +3,23 @@ package com.bsr.emlak.burada.service;
 
 import com.bsr.emlak.commons.dto.request.PropertyRequestDTO;
 import com.bsr.emlak.commons.entity.property.Property;
-import com.bsr.emlak.commons.factory.PropertyFactory;
 import com.bsr.emlak.commons.repository.PropertyRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.bsr.emlak.commons.transformers.PropertyTransformer;
 import org.springframework.stereotype.Service;
 
 @Service
 public class PropertyService {
 
     private final PropertyRepository propertyRepository;
-    private final PropertyFactory propertyFactory;
+    private final PropertyTransformer propertyTransformer;
 
-    @Autowired
-    public PropertyService(PropertyRepository propertyRepository, PropertyFactory propertyFactory) {
+    public PropertyService(PropertyRepository propertyRepository, PropertyTransformer propertyTransformer) {
         this.propertyRepository = propertyRepository;
-        this.propertyFactory = propertyFactory;
+        this.propertyTransformer = propertyTransformer;
     }
 
     public Property saveProperty(PropertyRequestDTO propertyRequestDTO) {
-        return propertyRepository.save(propertyFactory.getProperty(propertyRequestDTO));
+        return propertyRepository.save(propertyTransformer.transform(propertyRequestDTO));
     }
 
     public Property getById(Long id) {

@@ -40,13 +40,15 @@ public class AdvertTransformer {
         advert.setProperty(property.orElse(null));
         advert.setPostedBy(emlakUser.orElse(null));
 
-        List<Document> images = request.getImages().stream()
+        List<Document> images = request.getImages()
+                .stream()
                 .map(url -> {
                     Document imageDoc = new Document();
                     imageDoc.setUrl(url);
                     imageDoc.setDocumentType(Document.DocumentType.IMAGE);
                     emlakUser.ifPresent(nonEmptyEmlakUser -> {
                         imageDoc.setCreatedBy(nonEmptyEmlakUser.getCreatedBy());
+                        imageDoc.setModifiedBy(nonEmptyEmlakUser.getCreatedBy());
                     });
                     return imageDoc;
                 }).collect(Collectors.toList());
