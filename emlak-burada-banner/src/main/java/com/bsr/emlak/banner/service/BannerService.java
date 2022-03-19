@@ -5,7 +5,6 @@ import java.util.stream.Collectors;
 
 import com.bsr.emlak.commons.dto.request.BannerRequestDTO;
 import com.bsr.emlak.commons.dto.response.BannerResponseDTO;
-import com.bsr.emlak.commons.entity.Advert;
 import com.bsr.emlak.commons.repository.AdvertRepository;
 import com.bsr.emlak.commons.repository.BannerRepository;
 import com.bsr.emlak.commons.transformers.BannerTransformer;
@@ -16,22 +15,21 @@ import org.springframework.stereotype.Service;
 public class BannerService {
 
 	private final BannerRepository repository;
-	private final AdvertRepository advertRepository;
+	private final BannerTransformer bannerTransformer;
 
 	@Autowired
-	public BannerService(BannerRepository repository, AdvertRepository advertRepository) {
+	public BannerService(BannerRepository repository, BannerTransformer bannerTransformer) {
 		this.repository = repository;
-		this.advertRepository = advertRepository;
+		this.bannerTransformer = bannerTransformer;
 	}
 
 	public List<BannerResponseDTO> getAllBanners() {
 		return repository.findAll().stream()
-				.map(BannerTransformer::convertToBannerResponse)
+				.map(bannerTransformer::convertToBannerResponse)
 				.collect(Collectors.toList());
 	}
 
 	public void saveBanner(BannerRequestDTO request) {
-		Advert advert = advertRepository.findByAdvertUUID(request.getAdvertUUID());
-		repository.save(BannerTransformer.transform(advert));
+		repository.save(bannerTransformer.transform(request));
 	}
 }

@@ -22,7 +22,7 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "advert")
-public class Advert extends BaseEntity{
+public class Advert extends BaseEntity {
 
     private String advertUUID;
     private String title;
@@ -39,8 +39,15 @@ public class Advert extends BaseEntity{
     @JsonIgnore
     private EmlakUser postedBy;
 
-    @ElementCollection
-    private List<String> imageList;
+    @OneToMany(
+            fetch = FetchType.EAGER,
+            targetEntity = Document.class,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    @JoinColumn(name ="advert_id", referencedColumnName = "id")
+    private List<Document> images;
+
     private BigDecimal cost;
     private Integer duration;
 

@@ -5,12 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.commons.lang3.ObjectUtils;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.List;
+
 
 @Getter
 @Setter
@@ -27,8 +26,15 @@ public class Banner extends BaseEntity{
 	private String city;
 	private String district;
 
-	@ElementCollection
-	private List<String> imageList;
+	@OneToMany(
+			fetch = FetchType.EAGER,
+			targetEntity = Document.class,
+			cascade = CascadeType.ALL,
+			orphanRemoval = true
+	)
+	@JoinColumn(name ="banner_id", referencedColumnName = "id")
+	private List<Document> images;
+
 	private Float grossSquareMeter;
 
 	@Enumerated(EnumType.STRING)

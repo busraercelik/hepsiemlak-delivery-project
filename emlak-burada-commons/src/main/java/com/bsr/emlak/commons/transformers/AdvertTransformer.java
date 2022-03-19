@@ -4,7 +4,6 @@ import com.bsr.emlak.commons.dto.request.AdvertRequestDTO;
 import com.bsr.emlak.commons.entity.Advert;
 import com.bsr.emlak.commons.entity.EmlakUser;
 import com.bsr.emlak.commons.entity.property.Property;
-import com.bsr.emlak.commons.enums.AdvertStatus;
 import com.bsr.emlak.commons.repository.EmlakUserRepository;
 import com.bsr.emlak.commons.repository.PropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +27,15 @@ public class AdvertTransformer {
         Optional<Property> property = propertyRepository.findById(request.getPropertyId());
         Optional<EmlakUser> emlakUser = emlakUserRepository.findById(request.getUserId());
 
+        property.orElseThrow(()->new RuntimeException(String.format("No property with id %s found!", request.getPropertyId())));
+        emlakUser.orElseThrow(()->new RuntimeException(String.format("No user with id %s found!", request.getUserId())));
+
         Advert advert = new Advert();
         advert.setTitle(request.getTitle());
         advert.setDescription(request.getDescription());
         advert.setProperty(property.orElse(null));
         advert.setPostedBy(emlakUser.orElse(null));
-        advert.setImageList(request.getImageList());
+        advert.setImages(request.getImages());
         advert.setCost(request.getCost());
         advert.setDuration(request.getDuration());
         advert.setShouldHighlighted(request.getShouldHighlighted());

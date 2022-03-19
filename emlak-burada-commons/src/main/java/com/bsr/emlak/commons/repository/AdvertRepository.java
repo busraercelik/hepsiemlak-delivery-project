@@ -5,7 +5,9 @@ import com.bsr.emlak.commons.entity.Advert;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface AdvertRepository extends JpaRepository<Advert, Long> {
-    Advert findByAdvertUUID(String advertUUID);
+    Optional<Advert> findByAdvertUUID(String advertUUID);
 }

@@ -1,5 +1,6 @@
 package com.bsr.emlak.commons.dto.response;
 
+import com.bsr.emlak.commons.entity.Document;
 import com.bsr.emlak.commons.enums.PropertyType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,7 +18,7 @@ public class BannerResponseDTO {
 	private String phoneNumber;
 	private String city;
 	private String district;
-	private List<String> imageList;
+	private List<Document> images;
 	private LocalDateTime postedDate;
 	private Float grossSquareMeter;
 	private PropertyType propertyType;

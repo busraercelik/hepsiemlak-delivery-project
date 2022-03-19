@@ -6,22 +6,24 @@ import com.bsr.emlak.commons.dto.response.BannerResponseDTO;
 import com.bsr.emlak.commons.entity.Address;
 import com.bsr.emlak.commons.entity.Advert;
 import com.bsr.emlak.commons.entity.Banner;
+import com.bsr.emlak.commons.entity.Document;
 import com.bsr.emlak.commons.entity.property.Residential;
 import com.bsr.emlak.commons.enums.AdvertStatus;
 import com.bsr.emlak.commons.enums.PropertyType;
 import com.bsr.emlak.commons.repository.AdvertRepository;
 import com.bsr.emlak.commons.repository.BannerRepository;
+import com.bsr.emlak.commons.transformers.BannerTransformer;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.*;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import static com.bsr.emlak.banner.BannerTestConstants.*;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -31,14 +33,21 @@ import static org.mockito.Mockito.when;
 @SpringBootTest
 public class BannerServiceTest {
 
-    @InjectMocks
-    private BannerService bannerService;
     @Mock
     private BannerRepository bannerRepository;
     @Mock
     private AdvertRepository advertRepository;
+    @InjectMocks
+    private BannerTransformer bannerTransformer;
     @Captor
     ArgumentCaptor<Banner> argumentCaptor;
+
+    private BannerService bannerService;
+
+    @BeforeEach
+    public void setup(){
+        bannerService = new BannerService(bannerRepository,bannerTransformer);
+    }
 
     @Test
     void getAllBanners() {
@@ -53,7 +62,7 @@ public class BannerServiceTest {
     void saveBanner() {
 
         Banner banner = prepareBanner();
-        when(advertRepository.findByAdvertUUID(any())).thenReturn(prepareAdvert());
+        when(advertRepository.findByAdvertUUID(any())).thenReturn(Optional.ofNullable(prepareAdvert()));
         bannerService.saveBanner(convertToBannerRequest(banner));
         verify(bannerRepository).save(argumentCaptor.capture());
         Banner value = argumentCaptor.getValue();
@@ -71,7 +80,7 @@ public class BannerServiceTest {
         banner.setAdvertUUID(TEST_AD_ID);
         banner.setCity(TEST_CITY);
         banner.setId(TEST_ID);
-        banner.setImageList(Collections.singletonList(TEST_IMAGE_URL));
+        banner.setImages(Collections.singletonList(prepareDocument(TEST_IMAGE_URL)));
         banner.setGrossSquareMeter(TEST_GROSS_SQUARE_METER);
         banner.setPhoneNumber(TEST_PHONE_NUMBER);
         banner.setCreatedAt(LocalDateTime.now());
@@ -82,12 +91,19 @@ public class BannerServiceTest {
         return banner;
     }
 
+    public Document prepareDocument(String url) {
+        Document document = new Document();
+        document.setDocumentType(Document.DocumentType.IMAGE);
+        document.setUrl(url);
+        return document;
+    }
+
     public Advert prepareAdvert(){
         Advert advert = new Advert();
         advert.setAdvertUUID(TEST_AD_ID);
         advert.setTitle(TEST_TITLE);
         advert.setDescription(TEST_DESCRIPTION);
-        advert.setImageList(Collections.singletonList(TEST_IMAGE_URL));
+        advert.setImages(Collections.singletonList(prepareDocument(TEST_IMAGE_URL)));
         advert.setCost(COST);
         advert.setDuration(TEST_DURATION);
         advert.setPhoneNumber(TEST_PHONE_NUMBER);

@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -30,7 +31,8 @@ public class AdvertService {
 	}
 
 	public List<Advert> getAllAdverts() {
-		return new ArrayList<>(advertRepository.findAll());
+		List<Advert> allAdverts = advertRepository.findAll();
+		return new ArrayList<>(allAdverts);
 	}
 
 	// after advert is saved send mail to queue

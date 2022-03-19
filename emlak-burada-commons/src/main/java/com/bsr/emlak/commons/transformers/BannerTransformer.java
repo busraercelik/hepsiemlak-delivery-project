@@ -4,41 +4,52 @@ import com.bsr.emlak.commons.dto.request.BannerRequestDTO;
 import com.bsr.emlak.commons.dto.response.BannerResponseDTO;
 import com.bsr.emlak.commons.entity.Advert;
 import com.bsr.emlak.commons.entity.Banner;
+import com.bsr.emlak.commons.repository.AdvertRepository;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
+@Component
 public class BannerTransformer {
 
-    public static BannerResponseDTO convertToBannerResponse(Banner banner) {
+    private final AdvertRepository advertRepository;
+
+    @Autowired
+    public BannerTransformer(AdvertRepository advertRepository) {
+        this.advertRepository = advertRepository;
+    }
+
+    public BannerResponseDTO convertToBannerResponse(Banner banner) {
         BannerResponseDTO response = new BannerResponseDTO();
         BeanUtils.copyProperties(banner, response);
         return response;
     }
 
-    public static Banner transform(BannerRequestDTO request) {
-        Banner banner = new Banner();
-        BeanUtils.copyProperties(request, banner);
-        return banner;
-    }
+    public Banner transform(BannerRequestDTO request){
+        Optional<Advert> optionalAdvert = advertRepository.findByAdvertUUID(request.getAdvertUUID());
+        optionalAdvert.orElseThrow(()-> new RuntimeException("No advert found for the given advert uuid.") );
+        Advert ad = optionalAdvert.orElse(null);
 
-    public static Banner transform(Advert advert){
         Banner banner = new Banner();
 
-        banner.setId(advert.getId());
-        banner.setAdvertUUID(advert.getAdvertUUID());
-        banner.setTitle(advert.getTitle());
-        banner.setPhoneNumber(advert.getPhoneNumber());
+        banner.setId(ad.getId());
+        banner.setAdvertUUID(ad.getAdvertUUID());
+        banner.setTitle(ad.getTitle());
+        banner.setPhoneNumber(ad.getPhoneNumber());
 
-        banner.setCity(advert.getProperty().getAddress().getCity());
-        banner.setDistrict(advert.getProperty().getAddress().getDistrict());
+        banner.setCity(ad.getProperty().getAddress().getCity());
+        banner.setDistrict(ad.getProperty().getAddress().getDistrict());
 
-        banner.setImageList(advert.getImageList());
-        banner.setGrossSquareMeter(advert.getProperty().getGrossSquareMeter());
+        banner.setImages(ad.getImages());
+        banner.setGrossSquareMeter(ad.getProperty().getGrossSquareMeter());
 
-        banner.setPropertyType(advert.getProperty().getPropertyType());
-        banner.setCost(advert.getCost());
+        banner.setPropertyType(ad.getProperty().getPropertyType());
+        banner.setCost(ad.getCost());
 
-        banner.setCreatedAt(advert.getCreatedAt());
-        banner.setCreatedBy(advert.getCreatedBy());
+        banner.setCreatedAt(ad.getCreatedAt());
+        banner.setCreatedBy(ad.getCreatedBy());
 
         return banner;
     }
