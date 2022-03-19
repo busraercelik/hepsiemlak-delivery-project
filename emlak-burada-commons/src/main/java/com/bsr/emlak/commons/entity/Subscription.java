@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "subscription")
-public class Subscription extends BaseEntity{
+public class Subscription extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id")

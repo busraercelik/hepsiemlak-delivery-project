@@ -1,6 +1,6 @@
 package com.bsr.emlak.email.service;
 
-import com.bsr.emlak.email.dto.EmailMessage;
+import com.bsr.emlak.commons.dto.request.EmailMessageRequestDTO;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,10 +17,10 @@ public class RabbitMqListenerService {
 		this.emailService = emailService;
 	}
 
-	@RabbitListener(queues = "${emlakburada.rabbitmq.queue}")
-	public void receiveMessage(EmailMessage message) {
+	@RabbitListener(queues = "${emlakburada.rabbitmq.queue:GENERAL_EMAIL_TOPIC}")
+	public void receiveMessage(EmailMessageRequestDTO message) {
 		log.info(message.toString());
-		emailService.send(message.getEmail());
+		emailService.send(message);
 	}
 
 }

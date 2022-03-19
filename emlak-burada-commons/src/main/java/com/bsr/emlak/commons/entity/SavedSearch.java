@@ -1,10 +1,12 @@
 package com.bsr.emlak.commons.entity;
 
-import lombok.*;
-import org.apache.commons.lang3.ObjectUtils;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,6 +14,6 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "saved_search")
-public class SavedSearch extends BaseEntity{
+public class SavedSearch extends BaseEntity {
     private String searchText;
 }

@@ -1,13 +1,14 @@
 package com.bsr.emlak.email;
 
+import com.bsr.emlak.commons.dto.request.EmailMessageRequestDTO;
 import com.bsr.emlak.email.service.EmailService;
 import com.bsr.emlak.email.service.RabbitMqListenerService;
-import com.bsr.emlak.email.dto.EmailMessage;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static com.bsr.emlak.email.MockEmailDataGenerator.prepareEmailDTO;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
@@ -20,14 +21,12 @@ public class RabbitMQListenerServiceTest {
     private EmailService emailService;
 
     @Test
-    void receiveMessage() {
-        rabbitMqListenerService.receiveMessage(prepareEmail());
-        verify(emailService).send("abc@gmail.com");
+    public void receiveMessage() {
+        EmailMessageRequestDTO emailMessageRequestDTO = prepareEmailDTO();
+        rabbitMqListenerService.receiveMessage(emailMessageRequestDTO);
+        verify(emailService).send(emailMessageRequestDTO);
     }
 
-    EmailMessage prepareEmail() {
-        EmailMessage message = new EmailMessage();
-        message.setEmail("abc@gmail.com");
-        return message;
-    }
+
+
 }

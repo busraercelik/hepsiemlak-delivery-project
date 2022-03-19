@@ -50,6 +50,17 @@ public class EmlakUser extends BaseEntity {
             mappedBy = "emlakUser")
     private Set<Subscription> subscriptions;
 
+    @OneToMany(targetEntity = Email.class,
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY,
+            mappedBy = "toEmlakUser")
+    private Set<Email> receivedEmails;
+
+    public String getFullName(){
+        return this.firstName+" "+this.lastName;
+    }
+
     public EmlakUser(String firstName, String lastName, String email, UserType userType) {
         this.firstName = firstName;
         this.lastName = lastName;

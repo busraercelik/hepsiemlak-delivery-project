@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "banner")
-public class Banner extends BaseEntity{
+public class Banner extends BaseEntity {
 
 	private String advertUUID;
 	private String title;

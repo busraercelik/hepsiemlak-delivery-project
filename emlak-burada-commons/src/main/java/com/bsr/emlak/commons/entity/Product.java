@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "product")
-public class Product extends BaseEntity{
+public class Product extends BaseEntity {
 
     private Integer totalAdverts;
     private Integer validityPeriodDays;

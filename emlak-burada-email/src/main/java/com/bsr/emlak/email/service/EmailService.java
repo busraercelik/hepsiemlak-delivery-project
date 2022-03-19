@@ -1,11 +1,14 @@
 package com.bsr.emlak.email.service;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.Date;
-import java.util.Properties;
+import com.bsr.emlak.commons.dto.request.EmailMessageRequestDTO;
+import com.bsr.emlak.commons.repository.EmailRepository;
+import com.bsr.emlak.commons.transformers.EmailTransformer;
+import com.bsr.emlak.email.config.EmailConfig;
+import com.bsr.emlak.email.util.EmailContentBuilder;
+import com.sun.mail.smtp.SMTPTransport;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -15,30 +18,39 @@ import javax.mail.PasswordAuthentication;
 import javax.mail.Session;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-
-import com.bsr.emlak.email.config.EmailConfig;
-import com.bsr.emlak.email.util.EmailContentBuilderUtil;
-import com.sun.mail.smtp.SMTPTransport;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import lombok.extern.slf4j.Slf4j;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Date;
+import java.util.Properties;
 
 @Service
 @Slf4j
 public class EmailService {
 
-	@Autowired
-	private EmailConfig config;
+	public static final String SMTP = "smtp";
+	private final EmailConfig config;
+	private final EmailRepository emailRepository;
+	private final EmailTransformer emailTransformer;
 
-	public void send(String email) {
+	@Autowired
+	public EmailService(EmailConfig config, EmailRepository emailRepository, EmailTransformer emailTransformer) {
+		this.config = config;
+		this.emailRepository = emailRepository;
+		this.emailTransformer = emailTransformer;
+	}
+
+	public void send(EmailMessageRequestDTO emailDTO) {
 		Properties properties = prepareSmtpServer();
 		Session session = prepareSessionWithCredentials(properties);
 
-		int sendMessage = sendMessage(email, session);
+		int sendMessage = sendMessage(emailDTO, session);
 		if (sendMessage == 0) {
-			log.info("Mail başarıyla gönderildi! -> " + email);
+			log.info("Mail başarıyla gönderildi! -> " + emailDTO.getToEmail());
 		}
-
+		/* save sent email to db */
+		emailRepository.save(emailTransformer.transform(emailDTO));
 	}
 
 	private Session prepareSessionWithCredentials(Properties prop) {
@@ -49,19 +61,25 @@ public class EmailService {
 				return new PasswordAuthentication(config.getUsername(), config.getPassword());
 			}
 		});
-
 	}
 
-	private int sendMessage(String email, Session session) {
+	private String getBody(EmailMessageRequestDTO email){
+		EmailContentBuilder builder = new EmailContentBuilder().
+				setGreeting(email.getUserName())
+				.addBody(email.getBody());
+		return builder.build();
+	}
+
+	private int sendMessage(EmailMessageRequestDTO email, Session session) {
 		Message message = new MimeMessage(session);
 		int lastServerResponse = 0;
 		try {
 			message.setFrom(new InternetAddress(config.getFrom()));
-			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email, false));
-			message.setSubject(config.getSubject());
-			message.setDataHandler(new DataHandler(new HTMLDataSource(EmailContentBuilderUtil.build(email))));
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email.getToEmail(), false));
+			message.setSubject(email.getSubject());
+			message.setDataHandler(new DataHandler(new HTMLDataSource(getBody(email))));
 			message.setSentDate(new Date());
-			SMTPTransport transport = (SMTPTransport) session.getTransport("smtp");
+			SMTPTransport transport = (SMTPTransport) session.getTransport(SMTP);
 			transport.connect(config.getSmtpServer(), config.getUsername(), config.getPassword());
 			transport.sendMessage(message, message.getAllRecipients());
 			lastServerResponse = transport.getLastReturnCode();
