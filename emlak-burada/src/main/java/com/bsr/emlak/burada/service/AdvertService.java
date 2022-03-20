@@ -14,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,14 +26,17 @@ public class AdvertService {
 	private final EmlakUserRepository emlakUserRepository;
 	private final AdvertTransformer advertTransformer;
 	private final EmlakBannerClient emlakBannerClient;
+	private final EmailQueueService emailQueueService;
 
 	@Autowired
 	public AdvertService(AdvertRepository advertRepository, EmlakUserRepository emlakUserRepository,
-						 AdvertTransformer advertTransformer, EmlakBannerClient emlakBannerClient) {
+						 AdvertTransformer advertTransformer, EmlakBannerClient emlakBannerClient,
+						 EmailQueueService emailQueueService) {
 		this.advertRepository = advertRepository;
 		this.emlakUserRepository = emlakUserRepository;
 		this.advertTransformer = advertTransformer;
 		this.emlakBannerClient = emlakBannerClient;
+		this.emailQueueService = emailQueueService;
 	}
 
 	public List<Advert> getAllAdverts() {
@@ -46,7 +48,7 @@ public class AdvertService {
 	public Advert saveAdvert(AdvertRequestDTO request) {
 		Advert savedAdvert = advertRepository.save(advertTransformer.transform(request));
 		/* push message to email topic */
-
+		emailQueueService.sendAdCreatedEmail(savedAdvert);
 		/* create banner using feign client */
 		log.info("going to call banner service with advert uuid: {}", savedAdvert.getAdvertUUID());
 		BannerRequestDTO bannerRequestDTO = BannerTransformer.Request.transform(savedAdvert);

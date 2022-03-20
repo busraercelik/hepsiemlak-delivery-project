@@ -15,7 +15,6 @@ public class Email extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = EmlakUser.class)
     @JoinColumn(name = "to_emlak_user_id", referencedColumnName = "id")
     private EmlakUser toEmlakUser;
-    private String fromEmail;
     private String subject;
     private String body;
     private LocalDateTime sentTimeStamp;

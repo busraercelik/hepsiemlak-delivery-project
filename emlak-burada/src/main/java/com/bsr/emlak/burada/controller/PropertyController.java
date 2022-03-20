@@ -8,6 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class PropertyController {
 
@@ -26,6 +28,11 @@ public class PropertyController {
     @GetMapping(value = "/property/{id}")
     public ResponseEntity<Property> getProperty(@PathVariable("id") Long id) {
         return new ResponseEntity<>(propertyService.getById(id), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/properties")
+    public ResponseEntity<List<Property>> getAllProperties() {
+        return ResponseEntity.ok(propertyService.getAllProperties());
     }
 
 }

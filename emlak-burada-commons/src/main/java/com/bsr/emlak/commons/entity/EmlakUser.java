@@ -5,10 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.commons.lang3.ObjectUtils;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -41,7 +39,7 @@ public class EmlakUser extends BaseEntity {
     @OneToMany(targetEntity = Advert.class,
             cascade = CascadeType.MERGE,
             fetch = FetchType.LAZY,
-            mappedBy = "postedBy")
+            mappedBy = "postedByEmlakUser")
     private Set<Advert> publishedAdverts;
 
     @OneToMany(targetEntity = Subscription.class,

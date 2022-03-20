@@ -1,9 +1,9 @@
 package com.bsr.emlak.burada.queue;
 
-import com.bsr.emlak.burada.service.EmailMessageService;
+import com.bsr.emlak.burada.service.EmailQueueService;
 
 public interface QueueService {
 	
-	void sendMessage(EmailMessageService email);
+	void sendMessage(EmailQueueService email);
 
 }

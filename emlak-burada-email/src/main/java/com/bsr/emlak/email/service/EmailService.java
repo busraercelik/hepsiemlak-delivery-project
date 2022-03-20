@@ -8,6 +8,7 @@ import com.bsr.emlak.email.util.EmailContentBuilder;
 import com.sun.mail.smtp.SMTPTransport;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.activation.DataHandler;
@@ -34,6 +35,9 @@ public class EmailService {
 	private final EmailRepository emailRepository;
 	private final EmailTransformer emailTransformer;
 
+	@Value("${emlak.email.active:false}")
+	private Boolean emailSendingActivated;
+
 	@Autowired
 	public EmailService(EmailConfig config, EmailRepository emailRepository, EmailTransformer emailTransformer) {
 		this.config = config;
@@ -42,13 +46,18 @@ public class EmailService {
 	}
 
 	public void send(EmailMessageRequestDTO emailDTO) {
-		Properties properties = prepareSmtpServer();
-		Session session = prepareSessionWithCredentials(properties);
+		if (emailSendingActivated) {
+			Properties properties = prepareSmtpServer();
+			Session session = prepareSessionWithCredentials(properties);
 
-		int sendMessage = sendMessage(emailDTO, session);
-		if (sendMessage == 0) {
-			log.info("Mail başarıyla gönderildi! -> " + emailDTO.getToEmail());
+			int sendMessage = sendMessage(emailDTO, session);
+			if (sendMessage == 0) {
+				log.info("Mail successfully sent! -> " + emailDTO.getToEmail());
+			}
+		} else {
+			log.warn("Email sending is disabled.");
 		}
+
 		/* save sent email to db */
 		emailRepository.save(emailTransformer.transform(emailDTO));
 	}

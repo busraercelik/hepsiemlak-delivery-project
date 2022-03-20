@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 @Component
 public class AdvertTransformer {
@@ -38,7 +37,7 @@ public class AdvertTransformer {
         advert.setTitle(request.getTitle());
         advert.setDescription(request.getDescription());
         advert.setProperty(property.orElse(null));
-        advert.setPostedBy(emlakUser.orElse(null));
+        advert.setPostedByEmlakUser(emlakUser.orElse(null));
 
         List<Document> images = request.getImages()
                 .stream()

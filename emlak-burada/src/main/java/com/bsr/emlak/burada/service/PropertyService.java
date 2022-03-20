@@ -7,6 +7,8 @@ import com.bsr.emlak.commons.repository.PropertyRepository;
 import com.bsr.emlak.commons.transformers.PropertyTransformer;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PropertyService {
 
@@ -24,5 +26,9 @@ public class PropertyService {
 
     public Property getById(Long id) {
         return propertyRepository.findById(id).orElse(null);
+    }
+
+    public List<Property> getAllProperties() {
+        return propertyRepository.findAll();
     }
 }

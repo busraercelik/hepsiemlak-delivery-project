@@ -3,7 +3,6 @@ package com.bsr.emlak.commons.entity;
 import com.bsr.emlak.commons.entity.property.Property;
 import com.bsr.emlak.commons.enums.AdvertStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,9 +34,9 @@ public class Advert extends BaseEntity {
     private Set<EmlakUser> favouriteOf;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    @JoinColumn(name = "posted_by_id", referencedColumnName = "id")
+    @JoinColumn(name = "posted_by_user_id", referencedColumnName = "id")
     @JsonIgnore
-    private EmlakUser postedBy;
+    private EmlakUser postedByEmlakUser;
 
     @OneToMany(
             fetch = FetchType.EAGER,

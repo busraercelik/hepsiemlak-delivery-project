@@ -4,10 +4,10 @@ public final class EmailContentBuilder {
 
 	private StringBuilder stringBuilder;
 
-	private static final String GREETING_TEMPLATE = "<p>Hoş geldin %s,</p>\n" ;
+	private static final String GREETING_TEMPLATE = "<p>Welcome %s,</p>\n" ;
 
 	private static final String SIGNATURE_TEMPLATE = "\n<p>Thank you,<p>" +
-													 "\n<p>Hepsi emlak Team</p>\n" ;
+													 "\n<p>Emlakburada Team</p>\n" ;
 	
 	public EmailContentBuilder() {
 		stringBuilder = new StringBuilder();

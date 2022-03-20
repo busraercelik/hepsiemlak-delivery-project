@@ -18,10 +18,12 @@ public class EmailTransformer {
     public Email transform(EmailMessageRequestDTO emailMessageRequestDTO){
         EmlakUser emlakUser = emlakUserRepository.getById(emailMessageRequestDTO.getToEmlakUserId());
         Email email = new Email();
-        email.setFromEmail(emailMessageRequestDTO.getFromEmail());
         email.setBody(emailMessageRequestDTO.getBody());
         email.setToEmlakUser(emlakUser);
         email.setCreatedAt(emailMessageRequestDTO.getSentTimeStamp());
+        email.setCreatedBy(emailMessageRequestDTO.getToEmlakUserId());
+        email.setSentTimeStamp(emailMessageRequestDTO.getSentTimeStamp());
+        email.setSubject(emailMessageRequestDTO.getSubject());
         return email;
     }
 
@@ -30,7 +32,6 @@ public class EmailTransformer {
             return EmailMessageRequestDTO
                     .builder()
                     .toEmlakUserId(email.getId())
-                    .fromEmail(email.getFromEmail())
                     .userName(email.getToEmlakUser().getFullName())
                     .toEmail(email.getToEmlakUser().getEmail())
                     .subject(email.getSubject())

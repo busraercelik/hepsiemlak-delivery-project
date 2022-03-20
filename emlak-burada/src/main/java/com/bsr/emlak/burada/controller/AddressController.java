@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class AddressController {
 
@@ -29,5 +31,10 @@ public class AddressController {
     @PostMapping(value = "/address")
     public ResponseEntity<Address> saveAddress(@RequestBody AddressRequestDTO addressRequestDTO) {
         return new ResponseEntity<>(addressService.saveAddress(address.transform(addressRequestDTO)), HttpStatus.CREATED);
+    }
+
+    @GetMapping(value = "/addresses")
+    public ResponseEntity<List<Address>> getAllAddresses() {
+        return ResponseEntity.ok(addressService.getAllAddresses());
     }
 }
