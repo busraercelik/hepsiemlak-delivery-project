@@ -22,6 +22,8 @@
         <module>emlak-burada-commons</module>
         <module>emlak-burada-banner</module>
         <module>emlak-burada</module>
+        <module>emlak-burada-email</module>
+        <module>emlak-burada-product</module>
     </modules>
 
 </project>
