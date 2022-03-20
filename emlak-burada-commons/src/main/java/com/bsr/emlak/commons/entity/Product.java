@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "product")
 public class Product extends BaseEntity {
-
+    private String productName;
     private Integer totalAdverts;
     private Integer validityPeriodDays;
     private BigDecimal cost;
