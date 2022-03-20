@@ -33,9 +33,4 @@ public class AdvertController {
 		return new ResponseEntity<>(advertService.getAdvertByAdvertId(advertNo), HttpStatus.OK);
 	}
 
-	@GetMapping(value = "/adverts/{userId}")
-	public ResponseEntity<List<Advert>> getFavouriteAdverts(@PathVariable long userId) {
-		return new ResponseEntity<>(advertService.getAllFavouriteAdverts(userId) , HttpStatus.OK);
-	}
-
 }
