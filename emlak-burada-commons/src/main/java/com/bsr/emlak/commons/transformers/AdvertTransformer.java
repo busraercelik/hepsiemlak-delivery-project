@@ -15,8 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.bsr.emlak.commons.constant.ErrorCode.INVALID_PROPERTY_TYPE;
-import static com.bsr.emlak.commons.constant.ErrorCode.PROPERTY_NOT_FOUND;
+import static com.bsr.emlak.commons.constant.ErrorCode.*;
 
 @Component
 public class AdvertTransformer {
@@ -35,11 +34,11 @@ public class AdvertTransformer {
         Optional<EmlakUser> emlakUser = emlakUserRepository.findById(request.getUserId());
 
         property.orElseThrow(()->EmlakBuradaAppException.builder()
-                .errorCode(PROPERTY_NOT_FOUND)
+                .errorCode(PROPERTY_NOT_FOUND.formatted(request.getPropertyId()))
                 .httpStatusCode(400)
                 .build());
         emlakUser.orElseThrow(()-> EmlakBuradaAppException.builder()
-                .errorCode(INVALID_PROPERTY_TYPE)
+                .errorCode(USER_NOT_FOUND.formatted(request.getUserId()))
                 .httpStatusCode(400)
                 .build());
 

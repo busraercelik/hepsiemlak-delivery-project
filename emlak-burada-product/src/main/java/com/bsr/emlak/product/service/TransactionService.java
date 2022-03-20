@@ -43,7 +43,7 @@ public class TransactionService {
 
         if (optionalEmlakUser.isEmpty()) {
             throw EmlakBuradaAppException.builder()
-                    .errorCode(USER_NOT_FOUND)
+                    .errorCode(USER_NOT_FOUND.formatted(purchaseRequestDTO.getEmlakUserId()))
                     .httpStatusCode(400)
                     .build();
         }
@@ -53,7 +53,7 @@ public class TransactionService {
 
         if (optionalProduct.isEmpty()) {
             throw EmlakBuradaAppException.builder()
-                    .errorCode(PACKAGE_NOT_FOUND)
+                    .errorCode(PACKAGE_NOT_FOUND.formatted(purchaseRequestDTO.getProductId()))
                     .httpStatusCode(400)
                     .build();
         }
@@ -89,7 +89,8 @@ public class TransactionService {
         /* transaction must be completed if this method is called */
         if (updateTransactionRequestDTO.getTransactionStatus()!=TransactionStatus.COMPLETE) {
             throw EmlakBuradaAppException.builder()
-                    .errorCode(INVALID_TRANSACTION_STATUS)
+                    .errorCode(INVALID_TRANSACTION_STATUS
+                            .formatted(updateTransactionRequestDTO.getTransactionStatus()))
                     .httpStatusCode(400)
                     .build();
         }
@@ -98,7 +99,7 @@ public class TransactionService {
         Transaction transaction = transactionRepository
                 .findById(updateTransactionRequestDTO.getTransactionId())
                 .orElseThrow(()-> EmlakBuradaAppException.builder()
-                        .errorCode(TRANSACTION_NOT_FOUND)
+                        .errorCode(TRANSACTION_NOT_FOUND.formatted(updateTransactionRequestDTO.getTransactionId()))
                         .httpStatusCode(400)
                         .build());
 

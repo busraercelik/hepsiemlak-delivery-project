@@ -34,7 +34,7 @@ public class AdvertValidatorService {
         EmlakUser emlakUser = emlakUserRepository
                 .findById(requestDTO.getUserId())
                 .orElseThrow(() -> EmlakBuradaAppException.builder()
-                        .errorCode(USER_NOT_FOUND)
+                        .errorCode(USER_NOT_FOUND.formatted(requestDTO.getUserId()))
                         .httpStatusCode(400)
                         .build());
 

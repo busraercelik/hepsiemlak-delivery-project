@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
-import static com.bsr.emlak.commons.constant.ErrorCode.INVALID_PROPERTY_TYPE;
 import static com.bsr.emlak.commons.constant.ErrorCode.USER_NOT_FOUND;
 
 @Component
@@ -31,10 +30,11 @@ public class PropertyTransformer {
         Optional<EmlakUser> owner = emlakUserRepository.findById(propertyRequestDTO.getEmlakUserId());
         owner.orElseThrow(()->
             EmlakBuradaAppException.builder()
-                    .errorCode(USER_NOT_FOUND)
+                    .errorCode(USER_NOT_FOUND.formatted(propertyRequestDTO.getEmlakUserId()))
                     .httpStatusCode(400)
                     .build()
         );
+
         owner.ifPresent(nonEmptyEmlakUser-> {
             property.setOwner(nonEmptyEmlakUser);
             property.setCreatedBy(nonEmptyEmlakUser.getId());

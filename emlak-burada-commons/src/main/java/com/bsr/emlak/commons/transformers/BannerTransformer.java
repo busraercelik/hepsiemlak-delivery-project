@@ -13,7 +13,6 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 import static com.bsr.emlak.commons.constant.ErrorCode.ADVERT_NOT_FOUND;
-import static com.bsr.emlak.commons.constant.ErrorCode.INVALID_PROPERTY_TYPE;
 
 @Component
 public class BannerTransformer {
@@ -45,7 +44,7 @@ public class BannerTransformer {
     public Banner transform(BannerRequestDTO request){
         Optional<Advert> optionalAdvert = advertRepository.findByAdvertUUID(request.getAdvertUUID());
         optionalAdvert.orElseThrow(()-> EmlakBuradaAppException.builder()
-                .errorCode(ADVERT_NOT_FOUND)
+                .errorCode(ADVERT_NOT_FOUND.formatted(request.getAdvertUUID()))
                 .httpStatusCode(400)
                 .build());
 
