@@ -2,8 +2,7 @@ package com.bsr.emlak.commons.entity;
 
 import com.bsr.emlak.commons.enums.PaymentMethod;
 import com.bsr.emlak.commons.enums.TransactionStatus;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -11,6 +10,9 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "transaction")
 public class Transaction extends BaseEntity{

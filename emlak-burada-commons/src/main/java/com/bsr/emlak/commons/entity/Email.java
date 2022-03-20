@@ -1,5 +1,6 @@
 package com.bsr.emlak.commons.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,6 +15,7 @@ public class Email extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = EmlakUser.class)
     @JoinColumn(name = "to_emlak_user_id", referencedColumnName = "id")
+    @JsonIgnore
     private EmlakUser toEmlakUser;
     private String subject;
     private String body;

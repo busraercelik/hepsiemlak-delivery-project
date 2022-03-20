@@ -1,6 +1,7 @@
 package com.bsr.emlak.commons.entity;
 
 import com.bsr.emlak.commons.enums.UserType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -53,6 +54,7 @@ public class EmlakUser extends BaseEntity {
             orphanRemoval = true,
             fetch = FetchType.LAZY,
             mappedBy = "toEmlakUser")
+    @JsonIgnore
     private Set<Email> receivedEmails;
 
     public String getFullName(){

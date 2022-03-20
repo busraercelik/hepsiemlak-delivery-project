@@ -1,7 +1,6 @@
 package com.bsr.emlak.commons.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.apache.commons.lang3.ObjectUtils;
 
 import javax.persistence.Entity;
@@ -14,6 +13,9 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "product")
 public class Product extends BaseEntity {
     private String productName;

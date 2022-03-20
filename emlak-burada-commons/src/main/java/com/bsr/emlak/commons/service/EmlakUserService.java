@@ -1,4 +1,4 @@
-package com.bsr.emlak.burada.service;
+package com.bsr.emlak.commons.service;
 
 import com.bsr.emlak.commons.dto.request.EmlakUserRequestDTO;
 import com.bsr.emlak.commons.entity.EmlakUser;
