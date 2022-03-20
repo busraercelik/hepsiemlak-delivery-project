@@ -24,6 +24,7 @@
         <module>emlak-burada</module>
         <module>emlak-burada-email</module>
         <module>emlak-burada-product</module>
+        <module>cloud-gateway</module>
     </modules>
 
 </project>
