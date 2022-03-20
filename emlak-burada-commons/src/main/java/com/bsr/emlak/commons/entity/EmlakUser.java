@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -29,25 +30,26 @@ public class EmlakUser extends BaseEntity {
             fetch = FetchType.LAZY,
             orphanRemoval = true)
     @JoinColumn(name = "emlak_user_id",  referencedColumnName = "id")
-    private Set<SavedSearch> savedSearches;
+    private Set<SavedSearch> savedSearches = new LinkedHashSet<>();
 
     @ManyToMany(targetEntity = Advert.class, cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinTable(name = "emlak_user_favourite_advert",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "advert_id", referencedColumnName = "id")})
-    private Set<Advert> favouriteAdverts;
+    private Set<Advert> favouriteAdverts = new LinkedHashSet<>();
 
     @OneToMany(targetEntity = Advert.class,
             cascade = CascadeType.MERGE,
             fetch = FetchType.LAZY,
             mappedBy = "postedByEmlakUser")
-    private Set<Advert> publishedAdverts;
+    private Set<Advert> publishedAdverts = new LinkedHashSet<>();
 
-    @OneToMany(targetEntity = Subscription.class,
+    @OneToMany(targetEntity = ProductPurchaseHistory.class,
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY,
             mappedBy = "emlakUser")
-    private Set<Subscription> subscriptions;
+    @JsonIgnore
+    private Set<ProductPurchaseHistory> productPurchaseHistories = new LinkedHashSet<>();
 
     @OneToMany(targetEntity = Email.class,
             cascade = CascadeType.ALL,
@@ -55,7 +57,12 @@ public class EmlakUser extends BaseEntity {
             fetch = FetchType.LAZY,
             mappedBy = "toEmlakUser")
     @JsonIgnore
-    private Set<Email> receivedEmails;
+    private Set<Email> receivedEmails = new LinkedHashSet<>();
+
+    @OneToOne(mappedBy = "emlakUser",
+            cascade = CascadeType.ALL,
+            targetEntity = UsageLeft.class)
+    private UsageLeft usageLeft;
 
     public String getFullName(){
         return this.firstName+" "+this.lastName;

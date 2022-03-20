@@ -1,8 +1,8 @@
 package com.bsr.emlak.commons.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
-import org.apache.commons.lang3.ObjectUtils;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "subscription")
-public class Subscription extends BaseEntity {
+@Table(name = "product_purchase_history")
+public class ProductPurchaseHistory extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "product_id", referencedColumnName = "id")
@@ -22,6 +22,7 @@ public class Subscription extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JsonIgnore
     private EmlakUser emlakUser;
 
     private BigDecimal purchaseCost;

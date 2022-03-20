@@ -16,17 +16,26 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class TransactionResponseDTO {
     @JsonView(TransactionView.PENDING.class)
+    private Long transactionId;
+
+    @JsonView(TransactionView.PENDING.class)
     private BigDecimal amount;
+
     @JsonView(TransactionView.PENDING.class)
     private TransactionStatus transactionStatus;
+
     @JsonView(TransactionView.PENDING.class)
     private Long productId;
+
     @JsonView(TransactionView.PENDING.class)
     private PaymentMethod paymentMethod;
+
     @JsonView(TransactionView.PENDING.class)
     private String accountNumber;
+
     @JsonView(TransactionView.COMPLETED.class)
     protected LocalDateTime completedAt;
+
     @JsonView(TransactionView.PENDING.class)
     private Long emlakUserId;
 }

@@ -8,7 +8,8 @@ public class TransactionTransformer {
 
     public static class Response{
         public static TransactionResponseDTO transform(Transaction transaction){
-            TransactionResponseDTO transactionResponseDTO = TransactionResponseDTO.builder()
+            return TransactionResponseDTO.builder()
+                    .transactionId(transaction.getId())
                     .amount(transaction.getAmount())
                     .transactionStatus(transaction.getTransactionStatus())
                     .productId(transaction.getProduct().getId())
@@ -17,7 +18,6 @@ public class TransactionTransformer {
                     .completedAt(transaction.getCompletedAt())
                     .emlakUserId(transaction.getEmlakUser().getId())
                     .build();
-            return transactionResponseDTO;
         }
     }
 }
