@@ -1,4 +1,4 @@
-package com.bsr.emlak.burada.queue;
+package com.bsr.emlak.commons.queue;
 
 import org.springframework.stereotype.Service;
 

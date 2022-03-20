@@ -1,4 +1,4 @@
-package com.bsr.emlak.burada.config;
+package com.bsr.emlak.commons.config;
 
 import lombok.Data;
 import org.springframework.amqp.core.*;

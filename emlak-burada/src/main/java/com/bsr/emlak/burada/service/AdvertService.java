@@ -8,6 +8,7 @@ import com.bsr.emlak.commons.entity.Advert;
 import com.bsr.emlak.commons.entity.EmlakUser;
 import com.bsr.emlak.commons.repository.AdvertRepository;
 import com.bsr.emlak.commons.repository.EmlakUserRepository;
+import com.bsr.emlak.commons.service.EmailQueueService;
 import com.bsr.emlak.commons.transformers.AdvertTransformer;
 import com.bsr.emlak.commons.transformers.BannerTransformer;
 import lombok.extern.slf4j.Slf4j;
@@ -48,7 +49,7 @@ public class AdvertService {
 	public Advert saveAdvert(AdvertRequestDTO request) {
 		Advert savedAdvert = advertRepository.save(advertTransformer.transform(request));
 		/* push message to email topic */
-		emailQueueService.sendAdCreatedEmail(savedAdvert);
+		emailQueueService.sendAdvertCreatedEmail(savedAdvert);
 		/* create banner using feign client */
 		log.info("going to call banner service with advert uuid: {}", savedAdvert.getAdvertUUID());
 		BannerRequestDTO bannerRequestDTO = BannerTransformer.Request.transform(savedAdvert);

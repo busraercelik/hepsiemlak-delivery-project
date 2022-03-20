@@ -1,6 +1,6 @@
-package com.bsr.emlak.burada.service;
+package com.bsr.emlak.commons.service;
 
-import com.bsr.emlak.burada.config.RabbitMqConfig;
+import com.bsr.emlak.commons.config.RabbitMqConfig;
 import com.bsr.emlak.commons.dto.request.EmailMessageRequestDTO;
 import com.bsr.emlak.commons.entity.Advert;
 import com.bsr.emlak.commons.util.EmailMessageUtil;
@@ -20,7 +20,7 @@ public class EmailQueueService {
         this.rabbitTemplate = rabbitTemplate;
     }
 
-    public void sendAdCreatedEmail(Advert savedAdvert) {
+    public void sendAdvertCreatedEmail(Advert savedAdvert) {
         EmailMessageRequestDTO message = EmailMessageUtil.getAdvertCreatedEmailMessage(
                 savedAdvert.getAdvertUUID(),
                 savedAdvert.getPostedByEmlakUser()

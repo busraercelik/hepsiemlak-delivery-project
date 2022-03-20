@@ -17,7 +17,7 @@ public class RabbitMqListenerService {
 		this.emailService = emailService;
 	}
 
-	@RabbitListener(queues = "${emlakburada.rabbitmq.queue}")
+	@RabbitListener(queues = "${rabbitmq.queue}")
 	public void receiveMessage(EmailMessageRequestDTO message) {
 		log.info("Received message from queue : {}",message);
 		emailService.send(message);

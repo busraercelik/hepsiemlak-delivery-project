@@ -1,4 +1,4 @@
-package com.bsr.emlak.burada.queue;
+package com.bsr.emlak.commons.queue;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
