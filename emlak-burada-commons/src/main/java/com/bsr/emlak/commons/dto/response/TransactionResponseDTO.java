@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TransactionResponseDTO {
+
     @JsonView(TransactionView.PENDING.class)
     private Long transactionId;
 
