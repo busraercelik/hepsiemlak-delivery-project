@@ -2,6 +2,7 @@ package com.bsr.emlak.commons.service;
 
 import com.bsr.emlak.commons.dto.request.EmlakUserRequestDTO;
 import com.bsr.emlak.commons.entity.EmlakUser;
+import com.bsr.emlak.commons.exception.EmlakBuradaAppException;
 import com.bsr.emlak.commons.repository.EmlakUserRepository;
 import com.bsr.emlak.commons.transformers.AdvertTransformer;
 import com.bsr.emlak.commons.transformers.EmlakUserTransformer;
@@ -10,6 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static com.bsr.emlak.commons.constant.ErrorCode.INVALID_PROPERTY_TYPE;
+import static com.bsr.emlak.commons.constant.ErrorCode.NO_ACTIVE_PACKAGES_FOUND;
 
 @Service
 @Slf4j
@@ -33,7 +37,10 @@ public class EmlakUserService {
     public EmlakUser getEmlakUserById(long id) {
         EmlakUser emlakUser = emlakUserRepository.
                 findById(id)
-                .orElseThrow(() -> new RuntimeException(String.format("no person with given id %s found", id)));
+                .orElseThrow(() -> EmlakBuradaAppException.builder()
+                        .errorCode(NO_ACTIVE_PACKAGES_FOUND)
+                        .httpStatusCode(400)
+                        .build() );
         return emlakUser;
     }
 

@@ -1,14 +1,18 @@
 package com.bsr.emlak.commons.factory;
 
+import com.bsr.emlak.commons.constant.ErrorCode;
 import com.bsr.emlak.commons.dto.request.PropertyRequestDTO;
 import com.bsr.emlak.commons.entity.property.Commercial;
 import com.bsr.emlak.commons.entity.property.Land;
 import com.bsr.emlak.commons.entity.property.Property;
 import com.bsr.emlak.commons.entity.property.Residential;
 import com.bsr.emlak.commons.enums.PropertyType;
+import com.bsr.emlak.commons.exception.EmlakBuradaAppException;
 import com.bsr.emlak.commons.repository.AddressRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import static com.bsr.emlak.commons.constant.ErrorCode.INVALID_PROPERTY_TYPE;
 
 @Component
 public class PropertyFactory {
@@ -54,7 +58,10 @@ public class PropertyFactory {
 
                 return residential;
         }
-        throw new RuntimeException("Failed to create a property from request!");
+        throw EmlakBuradaAppException.builder()
+                .errorCode(INVALID_PROPERTY_TYPE)
+                .httpStatusCode(400)
+                .build();
     }
 
     private void updateCommonPropertyDetails(PropertyRequestDTO requestDTO, Property property) {

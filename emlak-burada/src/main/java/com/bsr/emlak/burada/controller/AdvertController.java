@@ -25,7 +25,7 @@ public class AdvertController {
 
 	@PostMapping(value = "/advert")
 	public ResponseEntity<Advert> createAdvert(@RequestBody AdvertRequestDTO request) {
-		return new ResponseEntity<>(advertService.saveAdvert(request), HttpStatus.CREATED);
+		return new ResponseEntity<>(advertService.createAdvert(request), HttpStatus.CREATED);
 	}
 
 	@GetMapping(value = "/advert/{advertNo}")

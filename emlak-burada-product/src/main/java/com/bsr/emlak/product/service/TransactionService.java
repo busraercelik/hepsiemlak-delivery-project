@@ -6,6 +6,7 @@ import com.bsr.emlak.commons.dto.response.TransactionResponseDTO;
 import com.bsr.emlak.commons.entity.*;
 import com.bsr.emlak.commons.enums.PaymentMethod;
 import com.bsr.emlak.commons.enums.TransactionStatus;
+import com.bsr.emlak.commons.exception.EmlakBuradaAppException;
 import com.bsr.emlak.commons.repository.EmlakUserRepository;
 import com.bsr.emlak.commons.repository.TransactionRepository;
 import com.bsr.emlak.commons.transformers.TransactionTransformer;
@@ -14,9 +15,11 @@ import org.apache.commons.lang3.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.Optional;
+
+import static com.bsr.emlak.commons.constant.ErrorCode.*;
 
 @Slf4j
 @Service
@@ -39,16 +42,20 @@ public class TransactionService {
         Optional<EmlakUser> optionalEmlakUser = emlakUserRepository.findById(purchaseRequestDTO.getEmlakUserId());
 
         if (optionalEmlakUser.isEmpty()) {
-            throw new RuntimeException(String.format("User with id: %d is not found",
-                    purchaseRequestDTO.getEmlakUserId()));
+            throw EmlakBuradaAppException.builder()
+                    .errorCode(USER_NOT_FOUND)
+                    .httpStatusCode(400)
+                    .build();
         }
 
         Optional<Product> optionalProduct = Optional.ofNullable(productService
                 .getProductById(purchaseRequestDTO.getProductId()));
 
         if (optionalProduct.isEmpty()) {
-            throw new RuntimeException(String.format("Product with id: %d is not found",
-                    purchaseRequestDTO.getProductId()));
+            throw EmlakBuradaAppException.builder()
+                    .errorCode(PACKAGE_NOT_FOUND)
+                    .httpStatusCode(400)
+                    .build();
         }
 
         EmlakUser emlakUser = optionalEmlakUser.get();
@@ -81,15 +88,19 @@ public class TransactionService {
     public TransactionResponseDTO completeTransaction(UpdateTransactionRequestDTO updateTransactionRequestDTO) {
         /* transaction must be completed if this method is called */
         if (updateTransactionRequestDTO.getTransactionStatus()!=TransactionStatus.COMPLETE) {
-            throw new RuntimeException(String.format("Invalid transaction status : %s",
-                    updateTransactionRequestDTO.getTransactionStatus().name()));
+            throw EmlakBuradaAppException.builder()
+                    .errorCode(INVALID_TRANSACTION_STATUS)
+                    .httpStatusCode(400)
+                    .build();
         }
 
         /* load the transaction from db  */
         Transaction transaction = transactionRepository
                 .findById(updateTransactionRequestDTO.getTransactionId())
-                .orElseThrow(()-> new RuntimeException(String.format("Transaction with id : %s not found",
-                        updateTransactionRequestDTO.getTransactionId())));
+                .orElseThrow(()-> EmlakBuradaAppException.builder()
+                        .errorCode(TRANSACTION_NOT_FOUND)
+                        .httpStatusCode(400)
+                        .build());
 
         /* update the transaction status and complete date */
         transaction.setTransactionStatus(TransactionStatus.COMPLETE);

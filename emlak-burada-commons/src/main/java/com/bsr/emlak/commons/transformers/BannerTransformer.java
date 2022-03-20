@@ -4,12 +4,16 @@ import com.bsr.emlak.commons.dto.request.BannerRequestDTO;
 import com.bsr.emlak.commons.dto.response.BannerResponseDTO;
 import com.bsr.emlak.commons.entity.Advert;
 import com.bsr.emlak.commons.entity.Banner;
+import com.bsr.emlak.commons.exception.EmlakBuradaAppException;
 import com.bsr.emlak.commons.repository.AdvertRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
+
+import static com.bsr.emlak.commons.constant.ErrorCode.ADVERT_NOT_FOUND;
+import static com.bsr.emlak.commons.constant.ErrorCode.INVALID_PROPERTY_TYPE;
 
 @Component
 public class BannerTransformer {
@@ -40,7 +44,11 @@ public class BannerTransformer {
 
     public Banner transform(BannerRequestDTO request){
         Optional<Advert> optionalAdvert = advertRepository.findByAdvertUUID(request.getAdvertUUID());
-        optionalAdvert.orElseThrow(()-> new RuntimeException("No advert found for the given advert uuid.") );
+        optionalAdvert.orElseThrow(()-> EmlakBuradaAppException.builder()
+                .errorCode(ADVERT_NOT_FOUND)
+                .httpStatusCode(400)
+                .build());
+
         Advert ad = optionalAdvert.orElse(null);
 
         Banner banner = new Banner();

@@ -5,6 +5,7 @@ import com.bsr.emlak.commons.entity.Advert;
 import com.bsr.emlak.commons.entity.Document;
 import com.bsr.emlak.commons.entity.EmlakUser;
 import com.bsr.emlak.commons.entity.property.Property;
+import com.bsr.emlak.commons.exception.EmlakBuradaAppException;
 import com.bsr.emlak.commons.repository.EmlakUserRepository;
 import com.bsr.emlak.commons.repository.PropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,9 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static com.bsr.emlak.commons.constant.ErrorCode.INVALID_PROPERTY_TYPE;
+import static com.bsr.emlak.commons.constant.ErrorCode.PROPERTY_NOT_FOUND;
 
 @Component
 public class AdvertTransformer {
@@ -30,8 +34,14 @@ public class AdvertTransformer {
         Optional<Property> property = propertyRepository.findById(request.getPropertyId());
         Optional<EmlakUser> emlakUser = emlakUserRepository.findById(request.getUserId());
 
-        property.orElseThrow(()->new RuntimeException(String.format("No property with id %s found!", request.getPropertyId())));
-        emlakUser.orElseThrow(()->new RuntimeException(String.format("No user with id %s found!", request.getUserId())));
+        property.orElseThrow(()->EmlakBuradaAppException.builder()
+                .errorCode(PROPERTY_NOT_FOUND)
+                .httpStatusCode(400)
+                .build());
+        emlakUser.orElseThrow(()-> EmlakBuradaAppException.builder()
+                .errorCode(INVALID_PROPERTY_TYPE)
+                .httpStatusCode(400)
+                .build());
 
         Advert advert = new Advert();
         advert.setTitle(request.getTitle());

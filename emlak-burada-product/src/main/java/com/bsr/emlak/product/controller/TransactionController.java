@@ -5,15 +5,19 @@ import com.bsr.emlak.commons.dto.request.UpdateTransactionRequestDTO;
 import com.bsr.emlak.commons.dto.response.jsonview.TransactionView;
 import com.bsr.emlak.product.service.TransactionService;
 import com.fasterxml.jackson.annotation.JsonView;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 public class TransactionController {
 
     private final TransactionService purchaseService;
 
+    @Autowired
     public TransactionController(TransactionService purchaseService) {
         this.purchaseService = purchaseService;
     }

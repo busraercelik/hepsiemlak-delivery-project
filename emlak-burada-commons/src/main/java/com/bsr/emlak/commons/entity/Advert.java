@@ -33,7 +33,7 @@ public class Advert extends BaseEntity {
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "favouriteAdverts", cascade = CascadeType.MERGE)
     private Set<EmlakUser> favouriteOf;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JoinColumn(name = "posted_by_user_id", referencedColumnName = "id")
     @JsonIgnore
     private EmlakUser postedByEmlakUser;
