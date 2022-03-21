@@ -11,12 +11,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class UserController {
+public class EmlakUserController {
 
     private final EmlakUserService emlakUserService;
     private final AdvertService advertService;
 
-    public UserController(EmlakUserService emlakUserService, AdvertService advertService) {
+    public EmlakUserController(EmlakUserService emlakUserService, AdvertService advertService) {
         this.emlakUserService = emlakUserService;
         this.advertService = advertService;
     }
@@ -27,8 +27,8 @@ public class UserController {
     }
 
     @PostMapping(value = "/user")
-    public ResponseEntity<?> saveEmlakUser(@RequestBody EmlakUserRequestDTO emlakUserRequestDTO) {
-        return new ResponseEntity<>(emlakUserService.saveEmlakUser(emlakUserRequestDTO),HttpStatus.CREATED);
+    public ResponseEntity<?> signUpEmlakUser(@RequestBody EmlakUserRequestDTO emlakUserRequestDTO) {
+        return new ResponseEntity<>(emlakUserService.signUpEmlakUser(emlakUserRequestDTO),HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/user/{userId}")

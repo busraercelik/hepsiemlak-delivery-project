@@ -1,9 +1,10 @@
-package com.emlakburada.cloudgateway;
+package com.bsr.emlak.cloudgateway;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
@@ -15,7 +16,7 @@ public class LoggingGlobalPreFilter implements GlobalFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        logger.info("Global Pre Filter executed {}");
+        logger.info("Received request {} : {}");
         return chain.filter(exchange);
     }
 }

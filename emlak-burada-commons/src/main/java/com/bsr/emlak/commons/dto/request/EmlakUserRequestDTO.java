@@ -11,6 +11,7 @@ import lombok.Data;
 public class EmlakUserRequestDTO {
     private String firstName;
     private String lastName;
+    private String passwordHash;
     private String email;
     private String mobileNo;
     private UserType userType;

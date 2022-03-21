@@ -1,4 +1,4 @@
-package com.bsr.emlak.commons.exception.handler;
+package com.bsr.emlak.burada.handler;
 
 import com.bsr.emlak.commons.exception.EmlakBuradaAppException;
 import lombok.extern.slf4j.Slf4j;
