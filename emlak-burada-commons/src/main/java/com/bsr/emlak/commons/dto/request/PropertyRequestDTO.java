@@ -3,9 +3,11 @@ package com.bsr.emlak.commons.dto.request;
 import com.bsr.emlak.commons.enums.PropertyType;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 @Getter
+@Setter
 @ToString
 @Builder
 public class PropertyRequestDTO {

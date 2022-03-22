@@ -111,4 +111,10 @@ public class AuthenticationService {
             return false;
         }
     }
+
+    @SneakyThrows
+    public String readEmlakUserIdFromToken(String jwt){
+        /* subject is emlak userid */
+        return SignedJWT.parse(jwt).getJWTClaimsSet().getSubject();
+    }
 }

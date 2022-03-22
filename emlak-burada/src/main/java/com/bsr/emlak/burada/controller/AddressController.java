@@ -4,6 +4,7 @@ import com.bsr.emlak.burada.service.AddressService;
 import com.bsr.emlak.commons.dto.request.AddressRequestDTO;
 import com.bsr.emlak.commons.entity.Address;
 import com.bsr.emlak.commons.transformers.AddressTransformer;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@Slf4j
 public class AddressController {
 
     private final AddressService addressService;
@@ -29,7 +31,11 @@ public class AddressController {
     }
 
     @PostMapping(value = "/address")
-    public ResponseEntity<Address> saveAddress(@RequestBody AddressRequestDTO addressRequestDTO) {
+    public ResponseEntity<Address> saveAddress(
+            @RequestBody AddressRequestDTO addressRequestDTO,
+            @RequestHeader(value="emlak_user_id") String emlakUserId) {
+        log.info("saveAddress --> User id : {}", emlakUserId);
+        addressRequestDTO.setEmlakUserId(Long.getLong(emlakUserId));
         return new ResponseEntity<>(addressService.saveAddress(address.transform(addressRequestDTO)), HttpStatus.CREATED);
     }
 

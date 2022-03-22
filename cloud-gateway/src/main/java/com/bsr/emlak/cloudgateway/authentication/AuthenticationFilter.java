@@ -10,6 +10,7 @@ import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.server.ServerWebExchange;
@@ -17,7 +18,11 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+
+import static com.bsr.emlak.commons.constant.CommonConstants.EMLAK_USER_ID_HEADER_NAME;
 
 @Component
 public class AuthenticationFilter implements GlobalFilter {
@@ -52,8 +57,16 @@ public class AuthenticationFilter implements GlobalFilter {
         if(!authenticationService.verifyToken(authenticationHeaderValue)){
             return generateErrorResponse("Invalid token passed", exchange);
         }
+
+        String emlakUserId = authenticationService.readEmlakUserIdFromToken(authenticationHeaderValue);
+
+        ServerHttpRequest request = exchange.getRequest()
+                .mutate()
+                .header(EMLAK_USER_ID_HEADER_NAME, emlakUserId)
+                .build();
+        ServerWebExchange modifiedExchange = exchange.mutate().request(request).build();
         /* allow the request pass */
-        return chain.filter(exchange);
+        return chain.filter(modifiedExchange);
     }
 
     private Mono<Void> generateErrorResponse(String message, ServerWebExchange exchange) throws JsonProcessingException {
