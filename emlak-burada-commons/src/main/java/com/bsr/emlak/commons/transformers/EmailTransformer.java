@@ -16,12 +16,12 @@ public class EmailTransformer {
     }
 
     public Email transform(EmailMessageRequestDTO emailMessageRequestDTO){
-        EmlakUser emlakUser = emlakUserRepository.getById(emailMessageRequestDTO.getToEmlakUserId());
+        EmlakUser emlakUser = emlakUserRepository.getById(emailMessageRequestDTO.getEmlakUserId());
         Email email = new Email();
         email.setBody(emailMessageRequestDTO.getBody());
         email.setToEmlakUser(emlakUser);
         email.setCreatedAt(emailMessageRequestDTO.getSentTimeStamp());
-        email.setCreatedBy(emailMessageRequestDTO.getToEmlakUserId());
+        email.setCreatedBy(emailMessageRequestDTO.getEmlakUserId());
         email.setSentTimeStamp(emailMessageRequestDTO.getSentTimeStamp());
         email.setSubject(emailMessageRequestDTO.getSubject());
         return email;
@@ -29,15 +29,16 @@ public class EmailTransformer {
 
     public static class Request{
         public static EmailMessageRequestDTO transform(Email email){
-            return EmailMessageRequestDTO
+            EmailMessageRequestDTO emailMessageRequestDTO = EmailMessageRequestDTO
                     .builder()
-                    .toEmlakUserId(email.getId())
                     .userName(email.getToEmlakUser().getFullName())
                     .toEmail(email.getToEmlakUser().getEmail())
                     .subject(email.getSubject())
                     .body(email.getBody())
                     .sentTimeStamp(email.getSentTimeStamp())
                     .build();
+            emailMessageRequestDTO.setEmlakUserId(email.getToEmlakUser().getId());
+            return emailMessageRequestDTO;
         }
     }
 

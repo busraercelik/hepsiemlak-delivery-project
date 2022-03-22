@@ -10,10 +10,9 @@ import lombok.ToString;
 @Setter
 @ToString
 @Builder
-public class PropertyRequestDTO {
+public class PropertyRequestDTO extends BaseRequestDTO{
     private String description;
     private Long addressId;
-    private Long emlakUserId;
     private Float grossSquareMeter;
     private Boolean isForSale;
     private PropertyType propertyType;

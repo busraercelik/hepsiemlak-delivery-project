@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static com.bsr.emlak.commons.constant.CommonConstants.EMLAK_USER_ID_HEADER_NAME;
-
 @Slf4j
 @RestController
 public class AdvertController {
@@ -31,7 +29,7 @@ public class AdvertController {
 	public ResponseEntity<Advert> createAdvert(
 			@RequestBody AdvertRequestDTO request, @RequestHeader(value="emlak_user_id") String emlakUserId) {
 		log.info("createAdvert --> User id : {}", emlakUserId);
-		request.setUserId(Long.getLong(emlakUserId));
+		request.setEmlakUserId(Long.valueOf(emlakUserId));
 		return new ResponseEntity<>(advertService.createAdvert(request), HttpStatus.CREATED);
 	}
 

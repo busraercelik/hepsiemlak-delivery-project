@@ -12,8 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 @Builder
-public class AdvertRequestDTO {
-	private Long userId;
+public class AdvertRequestDTO extends BaseRequestDTO{
 	private String title;
 	private String description;
 	private Long propertyId;

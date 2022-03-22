@@ -26,7 +26,7 @@ public class EmlakUserController {
         return new ResponseEntity<>(emlakUserService.getAllEmlakUsers(), HttpStatus.OK);
     }
 
-    @PostMapping(value = "/user")
+    @PostMapping(value = "/signup")
     public ResponseEntity<?> signUpEmlakUser(@RequestBody EmlakUserSignupDTO emlakUserRequestDTO) {
         return new ResponseEntity<>(emlakUserService.signUpEmlakUser(emlakUserRequestDTO),HttpStatus.CREATED);
     }

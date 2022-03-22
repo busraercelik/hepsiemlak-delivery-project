@@ -11,9 +11,8 @@ import java.time.LocalDateTime;
 @Builder
 @EqualsAndHashCode
 @ToString
-public class EmailMessageRequestDTO {
+public class EmailMessageRequestDTO extends BaseRequestDTO{
 
-	private Long toEmlakUserId;
 	private String toEmail;
 	private String userName;
 	private String subject;

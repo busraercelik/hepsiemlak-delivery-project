@@ -27,7 +27,7 @@ public class PropertyController {
             @RequestBody PropertyRequestDTO propertyRequestDTO,
             @RequestHeader(value="emlak_user_id") String emlakUserId) {
         log.info("saveProperty --> User id : {}", emlakUserId);
-        propertyRequestDTO.setEmlakUserId(Long.getLong(emlakUserId));
+        propertyRequestDTO.setEmlakUserId(Long.valueOf(emlakUserId));
         return new ResponseEntity<>(propertyService.saveProperty(propertyRequestDTO), HttpStatus.CREATED);
     }
 

@@ -27,7 +27,7 @@ public class TransactionController {
             @RequestBody StartTransactionRequestDTO transactionRequestDTO,
             @RequestHeader(value="emlak_user_id") String emlakUserId) {
         log.info("startTransaction --> User id : {}", emlakUserId);
-        transactionRequestDTO.setEmlakUserId(Long.getLong(emlakUserId));
+        transactionRequestDTO.setEmlakUserId(Long.valueOf(emlakUserId));
         return ResponseEntity.ok(purchaseService.initiateTransaction(transactionRequestDTO));
     }
 

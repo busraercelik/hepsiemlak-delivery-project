@@ -33,6 +33,8 @@ public class AuthenticationFilter implements GlobalFilter {
     private final AuthenticationService authenticationService;
     private final ObjectMapper objectMapper;
 
+    private static final String SIGNUP_URL = "/signup";
+
     @Autowired
     public AuthenticationFilter(AuthenticationService authenticationService, ObjectMapper objectMapper) {
         this.authenticationService = authenticationService;
@@ -42,7 +44,13 @@ public class AuthenticationFilter implements GlobalFilter {
     @SneakyThrows
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        logger.info("Received request {} : {}");
+        logger.info("Received request {} : {}", exchange.getRequest().getMethod(), exchange.getRequest().getPath());
+
+        /* ignore authentication */
+        if(exchange.getRequest().getPath().toString().equals(SIGNUP_URL)) {
+            return chain.filter(exchange);
+        }
+
         //read token
         List<String> headerValue = exchange.getRequest().getHeaders()
                 .get(AUTHENTICATION_HEADER_NAME);
@@ -68,6 +76,7 @@ public class AuthenticationFilter implements GlobalFilter {
         /* allow the request pass */
         return chain.filter(modifiedExchange);
     }
+
 
     private Mono<Void> generateErrorResponse(String message, ServerWebExchange exchange) throws JsonProcessingException {
         AuthenticationResponseDTO errorBody = AuthenticationResponseDTO

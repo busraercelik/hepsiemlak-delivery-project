@@ -35,7 +35,7 @@ public class AddressController {
             @RequestBody AddressRequestDTO addressRequestDTO,
             @RequestHeader(value="emlak_user_id") String emlakUserId) {
         log.info("saveAddress --> User id : {}", emlakUserId);
-        addressRequestDTO.setEmlakUserId(Long.getLong(emlakUserId));
+        addressRequestDTO.setEmlakUserId(Long.valueOf(emlakUserId));
         return new ResponseEntity<>(addressService.saveAddress(address.transform(addressRequestDTO)), HttpStatus.CREATED);
     }
 

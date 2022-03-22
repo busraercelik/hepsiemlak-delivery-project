@@ -17,8 +17,8 @@ public class EmailMessageUtil {
                 .subject("Advert successfully created")
                 .body(String.format("You successfully created advert with id: %s", UUID))
                 .sentTimeStamp(emlakUser.getModifiedAt())
-                .toEmlakUserId(emlakUser.getId())
                 .build();
+        emailMessageRequestDTO.setEmlakUserId(emlakUser.getId());
         return emailMessageRequestDTO;
     }
 }

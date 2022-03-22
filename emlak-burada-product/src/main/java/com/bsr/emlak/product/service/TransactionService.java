@@ -125,13 +125,14 @@ public class TransactionService {
 
         /* update usage left for emlakuser  */
         UsageLeft usageLeft = emlakUser.getUsageLeft();
-        usageLeft.setCreatedBy(emlakUser.getId());
-        usageLeft.setModifiedBy(emlakUser.getId());
 
         if(ObjectUtils.isEmpty(usageLeft)) {
             usageLeft = new UsageLeft();
             emlakUser.setUsageLeft(usageLeft);
         }
+        usageLeft.setCreatedBy(emlakUser.getId());
+        usageLeft.setModifiedBy(emlakUser.getId());
+
 
         /* load existing total adverts left */
         Integer advertsLeft = ObjectUtils.isEmpty(

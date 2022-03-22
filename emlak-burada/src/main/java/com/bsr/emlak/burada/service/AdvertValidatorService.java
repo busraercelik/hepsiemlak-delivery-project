@@ -32,9 +32,9 @@ public class AdvertValidatorService {
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void validateCreateAdvertRequest(AdvertRequestDTO requestDTO) {
         EmlakUser emlakUser = emlakUserRepository
-                .findById(requestDTO.getUserId())
+                .findById(requestDTO.getEmlakUserId())
                 .orElseThrow(() -> EmlakBuradaAppException.builder()
-                        .errorCode(USER_NOT_FOUND.formatted(requestDTO.getUserId()))
+                        .errorCode(USER_NOT_FOUND.formatted(requestDTO.getEmlakUserId()))
                         .httpStatusCode(400)
                         .build());
 

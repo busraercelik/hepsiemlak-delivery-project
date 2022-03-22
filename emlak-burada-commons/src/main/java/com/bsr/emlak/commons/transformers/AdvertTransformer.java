@@ -31,14 +31,14 @@ public class AdvertTransformer {
 
     public Advert transform(AdvertRequestDTO request) {
         Optional<Property> property = propertyRepository.findById(request.getPropertyId());
-        Optional<EmlakUser> emlakUser = emlakUserRepository.findById(request.getUserId());
+        Optional<EmlakUser> emlakUser = emlakUserRepository.findById(request.getEmlakUserId());
 
         property.orElseThrow(()->EmlakBuradaAppException.builder()
                 .errorCode(PROPERTY_NOT_FOUND.formatted(request.getPropertyId()))
                 .httpStatusCode(400)
                 .build());
         emlakUser.orElseThrow(()-> EmlakBuradaAppException.builder()
-                .errorCode(USER_NOT_FOUND.formatted(request.getUserId()))
+                .errorCode(USER_NOT_FOUND.formatted(request.getEmlakUserId()))
                 .httpStatusCode(400)
                 .build());
 

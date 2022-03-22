@@ -10,14 +10,15 @@ public class MockEmailDataGenerator {
     public static final String EMAIL_PASSWORD = "";
 
     public static EmailMessageRequestDTO prepareEmailDTO() {
-        return EmailMessageRequestDTO.builder()
-                .toEmlakUserId(1L)
+        EmailMessageRequestDTO messageRequestDTO = EmailMessageRequestDTO.builder()
                 .toEmail("bsr.ercelik@gmail.com")
                 .userName("Busra Ercelik")
                 .subject("Add posted successfully")
                 .body("Your advert has been posted")
                 .sentTimeStamp(LocalDateTime.now())
                 .build();
+        messageRequestDTO.setEmlakUserId(1L);
+        return messageRequestDTO;
     }
 
 }
