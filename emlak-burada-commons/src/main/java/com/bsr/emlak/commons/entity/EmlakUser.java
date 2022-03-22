@@ -20,6 +20,7 @@ import java.util.Set;
 public class EmlakUser extends BaseEntity {
     private String firstName;
     private String lastName;
+    @Column(unique = true)
     private String email;
     private String mobileNo;
     @Enumerated(EnumType.STRING)

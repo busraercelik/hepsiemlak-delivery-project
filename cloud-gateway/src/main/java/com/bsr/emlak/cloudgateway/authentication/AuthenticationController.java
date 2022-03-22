@@ -1,4 +1,4 @@
-package com.bsr.emlak.cloudgateway;
+package com.bsr.emlak.cloudgateway.authentication;
 
 import com.bsr.emlak.commons.dto.request.LoginRequestDTO;
 import org.springframework.beans.factory.annotation.Autowired;

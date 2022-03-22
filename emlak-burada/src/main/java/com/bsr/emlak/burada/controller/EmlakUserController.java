@@ -1,7 +1,7 @@
 package com.bsr.emlak.burada.controller;
 
 import com.bsr.emlak.burada.service.AdvertService;
-import com.bsr.emlak.commons.dto.request.EmlakUserRequestDTO;
+import com.bsr.emlak.commons.dto.request.EmlakUserSignupDTO;
 import com.bsr.emlak.commons.entity.Advert;
 import com.bsr.emlak.commons.entity.EmlakUser;
 import com.bsr.emlak.commons.service.EmlakUserService;
@@ -27,7 +27,7 @@ public class EmlakUserController {
     }
 
     @PostMapping(value = "/user")
-    public ResponseEntity<?> signUpEmlakUser(@RequestBody EmlakUserRequestDTO emlakUserRequestDTO) {
+    public ResponseEntity<?> signUpEmlakUser(@RequestBody EmlakUserSignupDTO emlakUserRequestDTO) {
         return new ResponseEntity<>(emlakUserService.signUpEmlakUser(emlakUserRequestDTO),HttpStatus.CREATED);
     }
 

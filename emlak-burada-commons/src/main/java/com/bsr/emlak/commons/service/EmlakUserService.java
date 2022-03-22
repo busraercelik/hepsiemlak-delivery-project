@@ -1,6 +1,6 @@
 package com.bsr.emlak.commons.service;
 
-import com.bsr.emlak.commons.dto.request.EmlakUserRequestDTO;
+import com.bsr.emlak.commons.dto.request.EmlakUserSignupDTO;
 import com.bsr.emlak.commons.entity.EmlakUser;
 import com.bsr.emlak.commons.entity.EmlakUserAuthentication;
 import com.bsr.emlak.commons.exception.EmlakBuradaAppException;
@@ -50,7 +50,7 @@ public class EmlakUserService {
     }
 
     @Transactional
-    public EmlakUser signUpEmlakUser(EmlakUserRequestDTO emlakUserRequestDTO) {
+    public EmlakUser signUpEmlakUser(EmlakUserSignupDTO emlakUserRequestDTO) {
         /* save authentication */
         if (ObjectUtils.isEmpty(emlakUserRequestDTO.getPasswordHash())) {
             throw EmlakBuradaAppException.builder()

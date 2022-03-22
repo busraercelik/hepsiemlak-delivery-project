@@ -8,7 +8,7 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 @Builder
-public class EmlakUserRequestDTO {
+public class EmlakUserSignupDTO {
     private String firstName;
     private String lastName;
     private String passwordHash;

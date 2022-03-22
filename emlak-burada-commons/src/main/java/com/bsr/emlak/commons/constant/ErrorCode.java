@@ -15,7 +15,8 @@ public enum ErrorCode {
     INVALID_TRANSACTION_STATUS("Invalid transaction status : %s", 93),
     PACKAGE_NOT_FOUND("Product with id: %d is not found", 92),
     AUTHENTICATION_FAILED("Authentication failed", 91),
-    PASSWORD_EMPTY("Password is empty", 90);
+    PASSWORD_EMPTY("Password is empty", 90),
+    SECRET_KEY_NOT_CONFIGURED("Please set up an environment variable 'SECRET_KEY'", 89);
 
     private String message;
     private Integer code;

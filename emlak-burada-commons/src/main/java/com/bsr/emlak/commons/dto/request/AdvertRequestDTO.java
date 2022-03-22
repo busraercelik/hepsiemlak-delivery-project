@@ -13,10 +13,10 @@ import java.util.List;
 @Data
 @Builder
 public class AdvertRequestDTO {
+	private Long userId;
 	private String title;
 	private String description;
 	private Long propertyId;
-	private Long userId;
 	private List<String> images;
 	private BigDecimal cost;
 	private Integer duration;
