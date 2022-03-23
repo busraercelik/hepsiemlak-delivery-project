@@ -6,7 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(value = "emlak-banner-service", url = "http://localhost:8082")
+@FeignClient(value = "emlak-banner-service", url = "${banner-client-url:http://localhost:8082}")
 public interface EmlakBannerClient {
 
     @PostMapping(value = "/banner")

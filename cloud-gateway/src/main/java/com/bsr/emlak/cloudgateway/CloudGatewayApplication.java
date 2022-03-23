@@ -1,5 +1,6 @@
 package com.bsr.emlak.cloudgateway;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -19,21 +20,28 @@ public class CloudGatewayApplication {
         SpringApplication.run(CloudGatewayApplication.class, args);
     }
 
+    @Value("${emlak-burada-url}")
+    private String buradaServiceUrl;
+    @Value("${emlak-burada-banner-url}")
+    private String bannerServiceUrl;
+    @Value("${emlak-burada-product-url}")
+    private String productServiceUrl;
+
     @Bean
     public RouteLocator routeDefinition(RouteLocatorBuilder builder) {
         return builder.routes()
                 .route(p -> p
                         .path("/advert-api/**")
                         .filters(f -> f.stripPrefix(1))
-                        .uri("http://localhost:8081/"))
+                        .uri(buradaServiceUrl))
                 .route(p -> p
                         .path("/banner-api/**")
                         .filters(f -> f.stripPrefix(1))
-                        .uri("http://localhost:8082/"))
+                        .uri(bannerServiceUrl))
                 .route(p -> p
                         .path("/product-api/**")
                         .filters(f -> f.stripPrefix(1))
-                        .uri("http://localhost:8084/"))
+                        .uri(productServiceUrl))
                 .build();
     }
 
