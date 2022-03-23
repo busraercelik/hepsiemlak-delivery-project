@@ -118,5 +118,12 @@
     emlak-burada-banner - http://localhost:8082/swagger-ui/index.html
     emlak-burada-product - http://localhost:8084/swagger-ui/index.html
 
+### Arcitechture diagram
+(https://github.com/busraercelik/hepsiemlak-delivery-project/blob/main/documentation/emlakburada.png)
+
+### ER diagram
+(https://github.com/busraercelik/hepsiemlak-delivery-project/blob/main/documentation/er-diagram.png)
+
+
 ###FAQ
     make sure port 5432,5672,15672,8080,8081,8082,8083,8084 are not in use
