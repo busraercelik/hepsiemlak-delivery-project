@@ -1,4 +1,6 @@
 ### Run emlak burada microservices
+    
+    mvn clean install
     docker-compose up
 
     # incase of errors, try forcing a image rebuild
