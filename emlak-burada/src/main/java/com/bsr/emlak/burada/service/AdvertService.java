@@ -21,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ExecutorService;
 
 @Slf4j
 @Service
@@ -32,17 +33,19 @@ public class AdvertService {
 	private final EmlakBannerClient emlakBannerClient;
 	private final EmailQueueService emailQueueService;
 	private final AdvertValidatorService advertValidatorService;
+	private final ExecutorService executorService;
 
 	@Autowired
 	public AdvertService(AdvertRepository advertRepository, EmlakUserRepository emlakUserRepository,
 						 AdvertTransformer advertTransformer, EmlakBannerClient emlakBannerClient,
-						 EmailQueueService emailQueueService, AdvertValidatorService advertValidatorService) {
+						 EmailQueueService emailQueueService, AdvertValidatorService advertValidatorService, ExecutorService executorService) {
 		this.advertRepository = advertRepository;
 		this.emlakUserRepository = emlakUserRepository;
 		this.advertTransformer = advertTransformer;
 		this.emlakBannerClient = emlakBannerClient;
 		this.emailQueueService = emailQueueService;
 		this.advertValidatorService = advertValidatorService;
+		this.executorService = executorService;
 	}
 
 	public List<Advert> getAllAdverts() {
@@ -58,9 +61,14 @@ public class AdvertService {
 		emailQueueService.sendAdvertCreatedEmail(savedAdvert);
 		/* create banner using feign client */
 		log.info("going to call banner service with advert uuid: {}", savedAdvert.getAdvertUUID());
-		BannerRequestDTO bannerRequestDTO = BannerTransformer.Request.transform(savedAdvert);
-		BannerResponseDTO bannerResponseDTO = emlakBannerClient.saveBanner(bannerRequestDTO);
-		log.info("created banner with id {}", bannerResponseDTO.getAdvertUUID());
+
+		// it won't block my request thread
+		executorService.execute(() -> {
+			BannerRequestDTO bannerRequestDTO = BannerTransformer.Request.transform(savedAdvert);
+			BannerResponseDTO bannerResponseDTO = emlakBannerClient.saveBanner(bannerRequestDTO);
+			log.info("created banner with id {}", bannerResponseDTO.getAdvertUUID());
+		});
+
 		return savedAdvert;
 	}
 
